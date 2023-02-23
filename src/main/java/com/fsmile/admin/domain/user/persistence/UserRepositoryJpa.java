@@ -35,7 +35,7 @@ public class UserRepositoryJpa implements UserRepository {
     }
 
     @Override
-    public String update(User user, String s) {
+    public String update(User user) {
         return null;
     }
 

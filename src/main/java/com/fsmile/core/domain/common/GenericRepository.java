@@ -13,7 +13,7 @@ public interface GenericRepository<E, K> {
 
     String create(E e);
 
-    String update(E e, K k);
+    String update(E e);
 
     String delete(K k);
 
