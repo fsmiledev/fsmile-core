@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Project trunk
@@ -37,19 +38,6 @@ public class DonationControllerV1 {
         return ResponseEntity.ok(map);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
-        List<String> errors = ex.getBindingResult().getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.toList());
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Validation failed", errors);
-        return ResponseEntity.badRequest().body(errorResponse);
-    }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), null);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
 }
 

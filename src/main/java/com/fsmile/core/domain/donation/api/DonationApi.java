@@ -30,6 +30,6 @@ public interface DonationApi {
     CompletableFuture<List<DonationCategory>> findAllValidatesCategories();
     CompletableFuture<List<DonationCategory>> findValidatesCategories();
 
-    CompletableFuture<Page<Donation>> findAllDonation();
+    Page<Donation> findAllDonation(int page, int size) throws Exception;
 
 }

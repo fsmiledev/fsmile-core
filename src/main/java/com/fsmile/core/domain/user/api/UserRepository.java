@@ -17,3 +17,4 @@ public interface UserRepository extends GenericRepository<User, String> {
 
    // Page<User> findAll(int page, int size) throws Exception;
 }
+

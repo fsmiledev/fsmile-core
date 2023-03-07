@@ -74,6 +74,7 @@ public class DonationApiImpl implements DonationApi {
 
     @Override
     public CompletableFuture<List<DonationCategory>> findAllValidatesCategories() {
+
         return null;
     }
 
@@ -83,7 +84,8 @@ public class DonationApiImpl implements DonationApi {
     }
 
     @Override
-    public CompletableFuture<Page<Donation>> findAllDonation() {
-        return null;
+    public Page<Donation> findAllDonation(int page, int size) throws Exception {
+
+        return donationRepository.findAllBy(page, size);
     }
 }
