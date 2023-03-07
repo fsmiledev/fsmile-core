@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface DonationApi {
 
-    String addDonation(Donation donation, List<DonationImg> imgList);
+    String addDonation(Donation donation);
     void  deleteDonationImg(String imgId);
     void deleteDonation(String donationId);
     void editDonation(Donation donation);

@@ -22,9 +22,9 @@ public class DonationApiImpl implements DonationApi {
     private final DonationImgRepository donationImgRepository;
 
     @Override
-    public String addDonation(Donation donation, List<DonationImg> imgList) {
+    public String addDonation(Donation donation) {
         donationRepository.create(donation);
-        donationImgRepository.create(imgList);
+        donationImgRepository.create(donation.donationImgs());
         return donation.donationId();
     }
 

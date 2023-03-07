@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
  */
 
 @Entity
-@Table(name = "User")
+@Table(name = "USER")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,7 +34,12 @@ public class UserEntity {
     private Language defaultLang;
     private Theme defaultTheme;
     private String password;
-/*    Group group;
+
+    public UserEntity(String userId) {
+        this.userId = userId;
+    }
+
+    /*    Group group;
     UserMoresInfos userMoresInfos;*/
 }
 

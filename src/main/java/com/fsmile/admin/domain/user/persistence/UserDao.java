@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,8 +19,9 @@ import java.util.concurrent.CompletableFuture;
  * @date 2/19/23 : 7:00 PM
  */
 
+@Service
 @RequiredArgsConstructor
-public class UserRepositoryJpa implements UserRepository {
+public class UserDao implements UserRepository {
 
     private final UserJpaRepository userJpaRepository;
     @Override

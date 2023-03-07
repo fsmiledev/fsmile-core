@@ -1,5 +1,8 @@
 package com.fsmile.core.domain.donation.api;
 
+import com.fsmile.core.domain.user.api.User;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,10 +13,13 @@ import java.util.List;
  */
 public record Donation (
         String donationId,
-        String donorEmail,
+        User donor,
         DonationBeneficiary beneficiary,
+        DonationStatus status,
         boolean isAnonymous,
         List<DonationImg> donationImgs,
+        Date dateUpt,
+        Date dateCreated,
         DonationCategory category)  {}
 
 

@@ -12,6 +12,7 @@ public record DonationImg(
         String imgId,
         String donationId,
         String imgUrl,
-        Date dateUpd
+        Date dateUpdated,
+        Date dateCreated
 ) {
 }

@@ -6,5 +6,9 @@ package com.fsmile.core.domain.donation.api;
  * Author revouna
  * Date 21/02/2023
  */
-public class DonationCategory {
+public record DonationCategory (
+        String categoryId
+){
+
+
 }
