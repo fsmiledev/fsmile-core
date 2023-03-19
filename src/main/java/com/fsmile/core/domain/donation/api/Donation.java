@@ -1,6 +1,7 @@
 package com.fsmile.core.domain.donation.api;
 
 import com.fsmile.core.domain.user.api.User;
+import lombok.Builder;
 
 import java.util.Date;
 import java.util.List;
@@ -11,8 +12,10 @@ import java.util.List;
  * Author revouna
  * Date 21/02/2023
  */
-public record Donation (
+@Builder
+public record Donation(
         String donationId,
+        String donationName,
         User donor,
         DonationBeneficiary beneficiary,
         DonationStatus status,
@@ -20,7 +23,8 @@ public record Donation (
         List<DonationImg> donationImgs,
         Date dateUpt,
         Date dateCreated,
-        DonationCategory category)  {}
+        DonationCategory category) {
+}
 
 
 

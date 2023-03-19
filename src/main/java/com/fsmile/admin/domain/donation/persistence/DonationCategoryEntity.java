@@ -29,7 +29,7 @@ import java.util.Date;
 public class DonationCategoryEntity {
     @Id
     String categoryId;
-
+    String categoryName;
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdDate;

@@ -13,11 +13,11 @@ public interface GenericRepository<E, K> {
 
     String create(E e);
 
-    String update(E e);
+    void update(E e);
 
-    String delete(K k);
+    void delete(K k);
 
     E find(K k);
-
     Page<E> findAllBy(int page, int size) throws Exception;
+
 }

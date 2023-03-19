@@ -18,74 +18,72 @@ import java.util.concurrent.CompletableFuture;
 public class DonationApiImpl implements DonationApi {
 
     private final DonationRepository donationRepository;
-    private final DonationBeneficiaryRepository donationBeneficiaryRepository;
-    private final DonationImgRepository donationImgRepository;
+
 
     @Override
     public String addDonation(Donation donation) {
-        donationRepository.create(donation);
-        donationImgRepository.create(donation.donationImgs());
+        donationRepository.addDonation(donation);
         return donation.donationId();
     }
 
     @Override
     public void deleteDonationImg(String imgId) {
-        donationImgRepository.delete(imgId);
+        donationRepository.deleteDonationImg(imgId);
     }
 
     @Override
     public void deleteDonation(String donationId) {
-        donationRepository.delete(donationId);
+        donationRepository.deleteDonation(donationId);
     }
 
     @Override
     public void editDonation(Donation donation) {
-        donationRepository.update(donation);
+        donationRepository.editDonation(donation);
     }
 
     @Override
     public void validateDonation(String donationId, DonationStatus validate) {
+        donationRepository.validateDonation(donationId, validate);
     }
 
     @Override
     public void rejectDonation(String donationId, DonationStatus reject) {
+        donationRepository.rejectDonation(donationId, reject);
 
     }
 
     @Override
     public void giveDonation(List<Donation> donations, String beneficiaryId) {
-
+        donationRepository.giveDonations(donations, beneficiaryId);
     }
 
     @Override
     public void confirmDonationGive(List<Donation> donations, DonationStatus recept) {
-
+        donationRepository.confirmDonationGive(donations, recept);
     }
 
     @Override
     public String addDonationCategory(DonationCategory category) {
-        return null;
+        return donationRepository.addDonationCategory(category);
     }
 
     @Override
     public void editDonationCategory(DonationCategory category) {
-
+        donationRepository.editDonationCategory(category);
     }
 
     @Override
-    public CompletableFuture<List<DonationCategory>> findAllValidatesCategories() {
-
-        return null;
-    }
-
-    @Override
-    public CompletableFuture<List<DonationCategory>> findValidatesCategories() {
-        return null;
+    public List<DonationCategory> findAllCategories() {
+        return donationRepository.findAllCategories();
     }
 
     @Override
     public Page<Donation> findAllDonation(int page, int size) throws Exception {
+        return donationRepository.findAllDonation(page, size);
+    }
 
-        return donationRepository.findAllBy(page, size);
+    @Override
+    public Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
+        return donationRepository.findDonationsByStatus(page, size, status);
     }
 }

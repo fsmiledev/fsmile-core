@@ -27,9 +27,10 @@ public interface DonationApi {
     String addDonationCategory(DonationCategory category);
     void editDonationCategory(DonationCategory category);
 
-    CompletableFuture<List<DonationCategory>> findAllValidatesCategories();
-    CompletableFuture<List<DonationCategory>> findValidatesCategories();
+    List<DonationCategory> findAllCategories();
 
     Page<Donation> findAllDonation(int page, int size) throws Exception;
+    Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
+
 
 }

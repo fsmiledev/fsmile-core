@@ -1,5 +1,7 @@
 package com.fsmile.core.domain.donation.api;
 
+import lombok.Builder;
+
 import java.util.Date;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Date;
  * Author revouna
  * Date 21/02/2023
  */
+@Builder
 public record DonationImg(
         String imgId,
         String donationId,

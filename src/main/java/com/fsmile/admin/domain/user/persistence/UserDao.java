@@ -37,13 +37,11 @@ public class UserDao implements UserRepository {
     }
 
     @Override
-    public String update(User user) {
-        return null;
+    public void update(User user) {
     }
 
     @Override
-    public String delete(String s) {
-        return null;
+    public void delete(String s) {
     }
 
     @Override

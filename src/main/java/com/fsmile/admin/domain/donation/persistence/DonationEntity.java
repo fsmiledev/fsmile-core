@@ -34,7 +34,7 @@ public class DonationEntity {
 
     @Id
     private String donationId;
-
+    private String donationName;
     @ManyToOne
     private UserEntity donor;
     @ManyToOne
