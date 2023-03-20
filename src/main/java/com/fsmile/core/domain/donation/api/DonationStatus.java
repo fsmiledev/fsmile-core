@@ -7,5 +7,9 @@ package com.fsmile.core.domain.donation.api;
  * Date 21/02/2023
  */
 public enum DonationStatus {
-    SAVED
+    SAVED,
+    VALIDATE,
+    REJECT,
+    GIVE,
+    RECEIVED
 }

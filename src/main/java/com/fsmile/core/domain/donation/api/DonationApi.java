@@ -22,7 +22,7 @@ public interface DonationApi {
     void validateDonation(String donationId, DonationStatus validate);
     void rejectDonation(String donationId, DonationStatus reject);
     void giveDonation(List<Donation> donations, String beneficiaryId);
-    void confirmDonationGive(List<Donation> donations, DonationStatus recept);
+    void confirmDonationGive(List<Donation> donations);
 
     String addDonationCategory(DonationCategory category);
     void editDonationCategory(DonationCategory category);

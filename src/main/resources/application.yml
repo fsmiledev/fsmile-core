@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: fsmile
+  datasource:
+    url: jdbc:${FSMILE_DATABASE_TYPE:mysql}://${FSMILE_DATABASE_HOST:localhost}:${FSMILE_DATABASE_PORT:3306}/${FSMILE_DATABASE_NAME:FSMILEDB}?createDatabaseIfNotExist=true
+    username: ${FSMILE_DATABASE_USER:root}
+    password: ${FSMILE_DATABASE_PASSWORD:}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.${FSMILE_DATABASE_DIALECT:MySQL8Dialect}
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+server:
+  port: 1200

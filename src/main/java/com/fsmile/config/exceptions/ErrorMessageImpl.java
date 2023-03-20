@@ -2,6 +2,7 @@ package com.fsmile.config.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
@@ -16,13 +17,9 @@ import java.util.List;
  * @date 3/7/23 : 10:22 PM
  */
 
-@Data
-@AllArgsConstructor
-public class ErrorMessageImpl implements ErrorResponse {
 
-    private final HttpStatus status;
-    private final String message;
-    private final List<String> errors;
+public record ErrorMessageImpl(HttpStatus status, String message, List<String> errors) implements ErrorResponse {
+
     @Override
     public HttpStatusCode getStatusCode() {
         return status;
@@ -30,6 +27,6 @@ public class ErrorMessageImpl implements ErrorResponse {
 
     @Override
     public ProblemDetail getBody() {
-        return  ProblemDetail.forStatusAndDetail(status, message);
+        return ProblemDetail.forStatusAndDetail(status, message);
     }
 }

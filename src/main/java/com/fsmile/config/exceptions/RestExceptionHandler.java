@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+/*    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         ErrorResponse errorResponse = new ErrorMessageImpl(HttpStatus.BAD_REQUEST, "Validation failed", errors);
         return ResponseEntity.badRequest().body(errorResponse);
-    }
+    }*/
 
 
     @ExceptionHandler(Exception.class)

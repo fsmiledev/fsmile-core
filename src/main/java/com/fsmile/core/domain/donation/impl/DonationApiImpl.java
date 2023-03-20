@@ -3,6 +3,7 @@ package com.fsmile.core.domain.donation.impl;
 import com.fsmile.core.domain.donation.api.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * Date 23/02/2023
  */
 
+@Component
 @RequiredArgsConstructor
 public class DonationApiImpl implements DonationApi {
 
@@ -58,8 +60,8 @@ public class DonationApiImpl implements DonationApi {
     }
 
     @Override
-    public void confirmDonationGive(List<Donation> donations, DonationStatus recept) {
-        donationRepository.confirmDonationGive(donations, recept);
+    public void confirmDonationGive(List<Donation> donations) {
+        donationRepository.confirmDonationGive(donations);
     }
 
     @Override

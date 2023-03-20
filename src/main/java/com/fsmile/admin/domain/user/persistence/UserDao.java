@@ -54,6 +54,6 @@ public class UserDao implements UserRepository {
     public Page<User> findAllBy(int page, int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<UserEntity>> userEntities = userJpaRepository.findAllBy(pageable);
-        return MapUtils.mapEntityPageIntoDtoPage(userEntities, User.class);
+        return null;
     }
 }

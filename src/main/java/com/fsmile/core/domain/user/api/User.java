@@ -13,7 +13,6 @@ import lombok.Builder;
  */
 
 @Builder
-@AllArgsConstructor
 public record User(
         String userId,
         String username,

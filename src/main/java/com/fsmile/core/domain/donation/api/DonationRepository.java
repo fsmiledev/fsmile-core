@@ -1,6 +1,5 @@
 package com.fsmile.core.domain.donation.api;
 
-import com.fsmile.core.domain.common.GenericRepository;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  * Date 21/02/2023
  */
 public interface DonationRepository {
-    String addDonation(Donation donation);
+    void addDonation(Donation donation);
     void deleteDonationImg(String imgId);
 
     void deleteDonation(String donationId);
@@ -25,7 +24,7 @@ public interface DonationRepository {
 
     void giveDonations(List<Donation> donations, String beneficiaryId);
 
-    void confirmDonationGive(List<Donation> donations, DonationStatus recept);
+    void confirmDonationGive(List<Donation> donations);
 
     String addDonationCategory(DonationCategory category);
 

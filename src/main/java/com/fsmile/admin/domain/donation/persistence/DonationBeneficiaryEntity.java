@@ -52,4 +52,7 @@ public class DonationBeneficiaryEntity {
     @Column(updatable = false)
     private Date updatedDate;
 
+    public DonationBeneficiaryEntity(String beneficiaryId) {
+        this.beneficiaryId = beneficiaryId;
+    }
 }
