@@ -28,18 +28,15 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
 
     @Id
-    private String userId;
-    private String username;
-    private String email;
-    private Language defaultLang;
-    private Theme defaultTheme;
-    private String password;
-
+    String userId;
+    String username;
+    String firstName;
+    String lastName;
+    String email;
+    String password;
     public UserEntity(String userId) {
         this.userId = userId;
     }
 
-    /*    Group group;
-    UserMoresInfos userMoresInfos;*/
 }
 

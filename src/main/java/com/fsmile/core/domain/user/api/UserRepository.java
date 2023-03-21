@@ -13,8 +13,9 @@ import java.util.concurrent.CompletableFuture;
  * @package com.fsmile.core.domain.user.api
  * @date 2/18/23 : 6:46 PM
  */
-public interface UserRepository extends GenericRepository<User, String> {
+public interface UserRepository {
+    String createUser(User user);
+    Page<User> findAllUsers(int page, int size);
 
-   // Page<User> findAll(int page, int size) throws Exception;
 }
 

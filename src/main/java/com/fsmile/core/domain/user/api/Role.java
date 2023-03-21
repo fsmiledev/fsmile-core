@@ -6,5 +6,12 @@ package com.fsmile.core.domain.user.api;
  * @package com.fsmile.core.domain.user.api
  * @date 2/18/23 : 6:48 PM
  */
-public record Role() {
+public record Role(
+         String id,
+         String name,
+         String description,
+         boolean composite,
+         boolean clientRole,
+         boolean containerId
+) {
 }

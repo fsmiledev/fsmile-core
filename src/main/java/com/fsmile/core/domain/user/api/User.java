@@ -4,6 +4,7 @@ import com.fsmile.common.enums.Language;
 import com.fsmile.common.enums.Theme;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Setter;
 
 /**
  * @author raphael
@@ -16,11 +17,9 @@ import lombok.Builder;
 public record User(
         String userId,
         String username,
+        String firstName,
+        String lastName,
         String email,
-        Language defaultLang,
-        Theme defaultTheme,
-        String password,
-        Group group,
-        UserMoresInfos userMoresInfos
+        String password
 ) {
 }
