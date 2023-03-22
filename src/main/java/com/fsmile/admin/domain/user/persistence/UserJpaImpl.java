@@ -1,12 +1,13 @@
 package com.fsmile.admin.domain.user.persistence;
 
-import com.fsmile.core.domain.user.api.User;
-import com.fsmile.core.domain.user.api.UserRepository;
+import com.fsmile.core.domain.user.api.*;
 import com.fsmile.utils.StringUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserJpaImpl implements UserRepository {
     @Value("${realm}")
@@ -66,6 +68,67 @@ public class UserJpaImpl implements UserRepository {
                 .build();
         userJpaRepository.save(userEntity);
         return userId;
+    }
+
+    @Override
+    public void updateProfile(User user) throws Exception {
+        UserRepresentation userRepresentation = new UserRepresentation();
+        assert user.lastName() != null;
+        assert user.firstName() != null;
+        userRepresentation.setFirstName(user.firstName());
+        userRepresentation.setLastName(user.lastName());
+        instance.realm(realm).users().get(getUserByEmail(user.email()).userId()).update(userRepresentation);
+        UserEntity userEntity = userJpaRepository.findByEmail(user.email());
+        userEntity.setFirstName(user.firstName());
+        userEntity.setLastName(user.lastName());
+        userJpaRepository.save(userEntity);
+    }
+
+    @Override
+    public void resetUserPassword(ResetPassword resetPassword) throws Exception {
+        User user = getUserByEmail(resetPassword.userEmail());
+        CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
+        credentialRepresentation.setType("password");
+        credentialRepresentation.setValue(resetPassword.newPassword());
+        credentialRepresentation.setTemporary(false);
+        credentialRepresentation.setUserLabel("label");
+        instance.realm(realm).users().get(user.userId()).resetPassword(credentialRepresentation);
+    }
+
+    @Override
+    public void addUserMoresInfos(UserMoresInfos moresInfos) {
+
+    }
+
+    @Override
+    public void updateUserMoresInfos(UserMoresInfos moresInfos) {
+
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws Exception {
+        List<UserRepresentation> list = instance.realm(realm).users().searchByEmail(email, true);
+        if (list.isEmpty()) throw new Exception("User not found");
+        UserRepresentation userR = list.get(0);
+        System.out.println(userR.getRealmRoles());
+        return User.builder()
+                .userId(userR.getId())
+                .username(userR.getUsername())
+                .email(userR.getEmail())
+                .lastName(userR.getLastName())
+                .firstName(userR.getFirstName())
+                .roles(userR.getRealmRoles())
+                .build();
+    }
+
+    @Override
+    public UserMoresInfos getUserMoresInfos(String userEmail) {
+        return null;
+    }
+
+    @Override
+    public List<Role> getUserRoles(String userId) {
+        return null;
     }
 
     @Override

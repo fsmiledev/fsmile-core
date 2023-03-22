@@ -1,8 +1,6 @@
 package com.fsmile.core.domain.user.impl;
 
-import com.fsmile.core.domain.user.api.User;
-import com.fsmile.core.domain.user.api.UserApi;
-import com.fsmile.core.domain.user.api.UserRepository;
+import com.fsmile.core.domain.user.api.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,8 +26,43 @@ public class UserApiImpl implements UserApi {
 
 
     @Override
-    public void createUser(User user) {
-        userRepository.createUser(user);
+    public String  createUser(User user) {
+        return userRepository.createUser(user);
+    }
+
+    @Override
+    public void updateProfile(User user) throws Exception {
+        userRepository.updateProfile(user);
+    }
+
+    @Override
+    public void resetUserPassword(ResetPassword resetPassword) throws Exception {
+        userRepository.resetUserPassword(resetPassword);
+    }
+
+    @Override
+    public void addUserMoresInfos(UserMoresInfos moresInfos) {
+
+    }
+
+    @Override
+    public void updateUserMoresInfos(UserMoresInfos moresInfos) {
+
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws Exception {
+        return userRepository.getUserByEmail(email);
+    }
+
+    @Override
+    public UserMoresInfos getUserMoresInfos(String userEmail) {
+        return null;
+    }
+
+    @Override
+    public List<Role> getUserRoles(String userId) {
+        return null;
     }
 
     @Override

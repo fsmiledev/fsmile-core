@@ -15,7 +15,15 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface UserRepository {
     String createUser(User user);
+    void updateProfile(User user) throws Exception;
+    void resetUserPassword(ResetPassword resetPassword) throws Exception;
+    void addUserMoresInfos(UserMoresInfos moresInfos);
+    void updateUserMoresInfos(UserMoresInfos moresInfos);
+    User getUserByEmail(String email) throws Exception;
+    UserMoresInfos getUserMoresInfos(String userEmail);
+    List<Role> getUserRoles(String userId);
     Page<User> findAllUsers(int page, int size);
+
 
 }
 

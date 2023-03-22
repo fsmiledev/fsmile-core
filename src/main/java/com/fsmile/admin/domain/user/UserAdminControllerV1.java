@@ -1,14 +1,12 @@
 package com.fsmile.admin.domain.user;
 
+import com.fsmile.core.domain.user.api.ResetPassword;
 import com.fsmile.core.domain.user.api.User;
 import com.fsmile.core.domain.user.api.UserApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author raphael
@@ -26,7 +24,25 @@ public class UserAdminControllerV1 {
 
     @PostMapping(path = "signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
-        userApi.createUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(userApi.createUser(user));
     }
+
+    @PutMapping(path = "editProfile")
+    public ResponseEntity<?> editProfile(@RequestBody User user) throws Exception {
+        userApi.updateProfile(user);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping(path = "getUserByEmail/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(userApi.getUserByEmail(email));
+    }
+
+    @PutMapping(path = "resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPassword password) throws Exception {
+        userApi.resetUserPassword(password);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 }

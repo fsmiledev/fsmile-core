@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * @author raphael
  * @project fsmile
@@ -20,6 +22,9 @@ public record User(
         String firstName,
         String lastName,
         String email,
-        String password
+        String password,
+        String dateCreated,
+        List<String> roles
+
 ) {
 }

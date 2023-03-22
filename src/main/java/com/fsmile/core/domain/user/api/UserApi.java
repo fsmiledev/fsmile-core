@@ -5,6 +5,8 @@ import com.fsmile.core.domain.common.GenericRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author raphael
  * @project fsmile
@@ -14,8 +16,14 @@ import org.springframework.stereotype.Component;
 
 public interface UserApi {
 
-    void createUser(User user);
-
+    String createUser(User user);
+    void updateProfile(User user) throws Exception;
+    void resetUserPassword(ResetPassword resetPassword) throws Exception;
+    void addUserMoresInfos(UserMoresInfos moresInfos);
+    void updateUserMoresInfos(UserMoresInfos moresInfos);
+    User getUserByEmail(String email) throws Exception;
+    UserMoresInfos getUserMoresInfos(String userEmail);
+    List<Role> getUserRoles(String userId);
     Page<User> findAllUsers(int page, int size);
 
 

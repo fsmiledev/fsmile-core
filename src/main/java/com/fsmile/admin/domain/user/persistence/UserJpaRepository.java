@@ -17,4 +17,7 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, String> {
     @Async
     CompletableFuture<Page<UserEntity>> findAllBy(Pageable pageable);
 
+    UserEntity findByEmail(String email);
+
+
 }
