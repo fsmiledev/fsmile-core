@@ -42,12 +42,12 @@ public class UserApiImpl implements UserApi {
 
     @Override
     public void addUserMoresInfos(UserMoresInfos moresInfos) {
-
+        userRepository.addUserMoresInfos(moresInfos);
     }
 
     @Override
     public void updateUserMoresInfos(UserMoresInfos moresInfos) {
-
+        userRepository.updateUserMoresInfos(moresInfos);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public UserMoresInfos getUserMoresInfos(String userEmail) {
-        return null;
+    public UserMoresInfos getUserMoresInfos(String userId) {
+        return userRepository.getUserMoresInfos(userId);
     }
 
     @Override
@@ -68,5 +68,15 @@ public class UserApiImpl implements UserApi {
     @Override
     public Page<User> findAllUsers(int page, int size) {
         return userRepository.findAllUsers(page, size);
+    }
+
+    @Override
+    public void createUserSetting(UserSetting userSetting) {
+        userRepository.createUserSetting(userSetting);
+    }
+
+    @Override
+    public void editUserSetting(UserSetting userSetting) {
+        userRepository.editUserSetting(userSetting);
     }
 }

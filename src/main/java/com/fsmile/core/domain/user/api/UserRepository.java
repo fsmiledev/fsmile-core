@@ -20,9 +20,12 @@ public interface UserRepository {
     void addUserMoresInfos(UserMoresInfos moresInfos);
     void updateUserMoresInfos(UserMoresInfos moresInfos);
     User getUserByEmail(String email) throws Exception;
-    UserMoresInfos getUserMoresInfos(String userEmail);
+    UserMoresInfos getUserMoresInfos(String userId);
     List<Role> getUserRoles(String userId);
     Page<User> findAllUsers(int page, int size);
+    void createUserSetting(UserSetting userSetting);
+    void editUserSetting(UserSetting userSetting);
+    void createUserConnection(UserConnection connection);
 
 
 }

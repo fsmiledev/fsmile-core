@@ -25,6 +25,8 @@ public interface UserApi {
     UserMoresInfos getUserMoresInfos(String userEmail);
     List<Role> getUserRoles(String userId);
     Page<User> findAllUsers(int page, int size);
+    void createUserSetting(UserSetting userSetting);
+    void editUserSetting(UserSetting userSetting);
 
 
 }

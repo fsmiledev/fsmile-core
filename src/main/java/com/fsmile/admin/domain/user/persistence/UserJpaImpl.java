@@ -137,4 +137,19 @@ public class UserJpaImpl implements UserRepository {
         CompletableFuture<Page<UserEntity>> userEntities = userJpaRepository.findAllBy(pageable);
         return null;
     }
+
+    @Override
+    public void createUserSetting(UserSetting userSetting) {
+
+    }
+
+    @Override
+    public void editUserSetting(UserSetting userSetting) {
+
+    }
+
+    @Override
+    public void createUserConnection(UserConnection connection) {
+
+    }
 }

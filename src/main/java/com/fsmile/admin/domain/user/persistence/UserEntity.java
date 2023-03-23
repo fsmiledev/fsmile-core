@@ -32,20 +32,23 @@ import java.util.Date;
 @Data
 public class UserEntity {
 
-    @Id
+    @Id @Column(name = "USER_ID")
     String userId;
-    @Column(unique = true)
+    @Column(unique = true, name = "USERNAME")
     String username;
+    @Column(name = "FIRSTNAME")
     String firstName;
+    @Column(name = "LASTNAME")
     String lastName;
-    @Column(unique = true)
+    @Column(unique = true, name = "EMAIL")
     String email;
+    @Column(name = "PASSWORD")
     String password;
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(name = "CREATED_DATE")
     private Date createdDate;
     @UpdateTimestamp
-    @Column(updatable = false)
+    @Column(name = "UPDATED_DATE")
     private Date updatedDate;
     public UserEntity(String userId) {
         this.userId = userId;
