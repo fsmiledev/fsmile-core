@@ -18,7 +18,6 @@ public record UserSetting (
         Language defaultLanguage,
         Theme defaultTheme,
         Date createdDate,
-        boolean allowCookies
-) {
+        boolean allowCookies) {
 
 }

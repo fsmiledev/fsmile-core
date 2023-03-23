@@ -3,6 +3,7 @@ package com.fsmile.admin.domain.user;
 import com.fsmile.core.domain.user.api.ResetPassword;
 import com.fsmile.core.domain.user.api.User;
 import com.fsmile.core.domain.user.api.UserApi;
+import com.fsmile.core.domain.user.api.UserAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,10 @@ public class UserAdminControllerV1 {
 
     private final UserApi  userApi;
 
+    @PostMapping(path = "login")
+    public ResponseEntity<?> login(@RequestBody UserAuth user) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(userApi.login(user));
+    }
     @PostMapping(path = "signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
         return ResponseEntity.status(HttpStatus.OK).body(userApi.createUser(user));

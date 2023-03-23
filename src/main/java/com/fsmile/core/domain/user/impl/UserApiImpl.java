@@ -26,6 +26,11 @@ public class UserApiImpl implements UserApi {
 
 
     @Override
+    public UserToken login(UserAuth userAuth) throws Exception {
+        return userRepository.login(userAuth);
+    }
+
+    @Override
     public String  createUser(User user) {
         return userRepository.createUser(user);
     }

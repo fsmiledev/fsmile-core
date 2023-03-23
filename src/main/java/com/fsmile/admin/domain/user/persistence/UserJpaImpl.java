@@ -1,5 +1,6 @@
 package com.fsmile.admin.domain.user.persistence;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsmile.core.domain.user.api.*;
 import com.fsmile.utils.StringUtils;
 import jakarta.transaction.Transactional;
@@ -11,10 +12,15 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.core.Response;
 import java.util.Collections;
@@ -35,10 +41,27 @@ import java.util.concurrent.CompletableFuture;
 public class UserJpaImpl implements UserRepository {
     @Value("${realm}")
     private String realm;
+    @Value("${auth.address.url}")
+    private String authUrl;
     private final Keycloak instance;
     private final UserJpaRepository userJpaRepository;
 
 
+    @Override
+    public UserToken login(UserAuth userAuth) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, String> userObject = new LinkedMultiValueMap<>();
+        userObject.add("client_id", userAuth.clientId());
+        userObject.add("username", userAuth.username());
+        userObject.add("password", userAuth.password());
+        userObject.add("grant_type", userAuth.grandType());
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(userObject, headers);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(authUrl, HttpMethod.POST, requestEntity, String.class);
+        return objectMapper.readValue(responseEntity.getBody(), UserToken.class);
+    }
 
     @Override
     public String createUser(User user) {

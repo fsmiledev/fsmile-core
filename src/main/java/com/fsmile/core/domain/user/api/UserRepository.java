@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @date 2/18/23 : 6:46 PM
  */
 public interface UserRepository {
+    UserToken login(UserAuth userAuth) throws Exception;
     String createUser(User user);
     void updateProfile(User user) throws Exception;
     void resetUserPassword(ResetPassword resetPassword) throws Exception;

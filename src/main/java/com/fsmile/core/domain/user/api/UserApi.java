@@ -16,6 +16,7 @@ import java.util.List;
 
 public interface UserApi {
 
+    UserToken login(UserAuth userAuth) throws Exception;
     String createUser(User user);
     void updateProfile(User user) throws Exception;
     void resetUserPassword(ResetPassword resetPassword) throws Exception;
