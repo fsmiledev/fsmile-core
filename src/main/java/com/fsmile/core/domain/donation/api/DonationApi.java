@@ -1,11 +1,8 @@
 package com.fsmile.core.domain.donation.api;
 
-import com.fsmile.core.domain.common.GenericApi;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
-import java.util.Stack;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Project trunk
@@ -19,6 +16,8 @@ public interface DonationApi {
     void  deleteDonationImg(String imgId);
     void deleteDonation(String donationId);
     void editDonation(Donation donation);
+    Donation getDonation(String donationId);
+
     void validateDonation(String donationId, DonationStatus validate);
     void rejectDonation(String donationId, DonationStatus reject);
     void giveDonation(List<Donation> donations, String beneficiaryId);
@@ -28,9 +27,11 @@ public interface DonationApi {
     void editDonationCategory(DonationCategory category);
 
     List<DonationCategory> findAllCategories();
-
     Page<Donation> findAllDonation(int page, int size) throws Exception;
     Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
+
+    DonationBeneficiary getDonationBeneficiary(String beneficiaryId);
+    Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size);
 
 
 }

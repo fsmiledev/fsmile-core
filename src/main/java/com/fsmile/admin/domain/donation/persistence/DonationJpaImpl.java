@@ -78,14 +78,19 @@ public class DonationJpaImpl implements DonationRepository {
     }
 
     @Override
-    public void validateDonation(String donationId, DonationStatus validate) {
+    public Donation getDonation(String donationId) {
+        return null;
+    }
+
+    @Override
+    public void validateDonation(String donationId) {
         DonationEntity donationEntity = donationRepository.getReferenceById(donationId);
         donationEntity.setStatus(DonationStatus.VALIDATE);
         donationRepository.save(donationEntity);
     }
 
     @Override
-    public void rejectDonation(String donationId, DonationStatus reject) {
+    public void rejectDonation(String donationId) {
         DonationEntity donationEntity = donationRepository.getReferenceById(donationId);
         donationEntity.setStatus(DonationStatus.REJECT);
         donationRepository.save(donationEntity);
@@ -152,5 +157,15 @@ public class DonationJpaImpl implements DonationRepository {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findDonationEntityByStatus(status, pageable);
         return MapUtils.mapDonationPageToDtoPage(donations);
+    }
+
+    @Override
+    public DonationBeneficiary getDonationBeneficiary(String beneficiaryId) {
+        return null;
+    }
+
+    @Override
+    public Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) {
+        return null;
     }
 }

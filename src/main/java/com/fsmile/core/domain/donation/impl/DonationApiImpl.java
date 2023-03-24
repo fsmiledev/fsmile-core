@@ -44,13 +44,18 @@ public class DonationApiImpl implements DonationApi {
     }
 
     @Override
+    public Donation getDonation(String donationId) {
+        return null;
+    }
+
+    @Override
     public void validateDonation(String donationId, DonationStatus validate) {
-        donationRepository.validateDonation(donationId, validate);
+        donationRepository.validateDonation(donationId);
     }
 
     @Override
     public void rejectDonation(String donationId, DonationStatus reject) {
-        donationRepository.rejectDonation(donationId, reject);
+        donationRepository.rejectDonation(donationId);
 
     }
 
@@ -87,5 +92,15 @@ public class DonationApiImpl implements DonationApi {
     @Override
     public Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
         return donationRepository.findDonationsByStatus(page, size, status);
+    }
+
+    @Override
+    public DonationBeneficiary getDonationBeneficiary(String beneficiaryId) {
+        return null;
+    }
+
+    @Override
+    public Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) {
+        return null;
     }
 }

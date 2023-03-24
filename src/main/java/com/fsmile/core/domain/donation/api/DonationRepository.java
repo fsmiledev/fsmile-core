@@ -17,10 +17,11 @@ public interface DonationRepository {
     void deleteDonation(String donationId);
 
     void editDonation(Donation donation);
+    Donation getDonation(String donationId);
 
-    void validateDonation(String donationId, DonationStatus validate);
+    void validateDonation(String donationId);
 
-    void rejectDonation(String donationId, DonationStatus reject);
+    void rejectDonation(String donationId);
 
     void giveDonations(List<Donation> donations, String beneficiaryId);
 
@@ -34,5 +35,8 @@ public interface DonationRepository {
 
     Page<Donation> findAllDonation(int page, int size) throws Exception;
     Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
+
+    DonationBeneficiary getDonationBeneficiary(String beneficiaryId);
+    Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size);
 
 }
