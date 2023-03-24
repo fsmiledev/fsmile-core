@@ -1,9 +1,9 @@
 package com.fsmile.utils;
 
-import com.fsmile.admin.domain.donation.persistence.DonationEntity;
-import com.fsmile.core.domain.donation.api.Donation;
-import com.fsmile.core.domain.donation.api.DonationCategory;
-import com.fsmile.core.domain.donation.api.DonationImg;
+import com.fsmile.app.donation.persistence.DonationEntity;
+import com.fsmile.core.donation.api.Donation;
+import com.fsmile.core.donation.api.DonationCategory;
+import com.fsmile.core.donation.api.DonationImg;
 import org.springframework.data.domain.Page;
 
 import java.util.concurrent.CompletableFuture;
