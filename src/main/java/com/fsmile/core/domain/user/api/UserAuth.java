@@ -7,9 +7,9 @@ package com.fsmile.core.domain.user.api;
  * Date 23/03/2023
  */
 public record UserAuth(
-        String clientId,
         String username,
         String password,
-        String grandType
+        String grandType, //password Or refresh_token
+        String refreshToken
 ) {
 }

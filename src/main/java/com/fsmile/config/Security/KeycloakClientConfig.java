@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KeycloakClientConfig {
     @Bean
-    public Keycloak keycloak(@Value("${keycloak.server.url}") String serverUrl){
+    public Keycloak keycloak(@Value("${auth.server.url}") String serverUrl){
         return Keycloak.getInstance(serverUrl, "master", "admin", "admin","admin-cli");
     }
 

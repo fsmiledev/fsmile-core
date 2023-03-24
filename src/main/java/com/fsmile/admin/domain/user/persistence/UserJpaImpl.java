@@ -2,22 +2,19 @@ package com.fsmile.admin.domain.user.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsmile.core.domain.user.api.*;
-import com.fsmile.utils.StringUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.resource.UserResource;
-import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -39,9 +36,11 @@ import java.util.concurrent.CompletableFuture;
 @Transactional
 @RequiredArgsConstructor
 public class UserJpaImpl implements UserRepository {
-    @Value("${realm}")
+    @Value("${auth.realm.name}")
     private String realm;
-    @Value("${auth.address.url}")
+    @Value("${auth.realm.client-id}")
+    private String clientId;
+    @Value("${auth.server.token}")
     private String authUrl;
     private final Keycloak instance;
     private final UserJpaRepository userJpaRepository;
@@ -49,15 +48,24 @@ public class UserJpaImpl implements UserRepository {
 
     @Override
     public UserToken login(UserAuth userAuth) throws Exception {
+
         ObjectMapper objectMapper = new ObjectMapper();
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> userObject = new LinkedMultiValueMap<>();
-        userObject.add("client_id", userAuth.clientId());
-        userObject.add("username", userAuth.username());
-        userObject.add("password", userAuth.password());
+        userObject.add("client_id", clientId);
         userObject.add("grant_type", userAuth.grandType());
+        Assert.notNull(userAuth.grandType(), "Grand type is required");
+        if (userAuth.grandType().equals("password")) {
+            Assert.notNull(userAuth.username(), "Username is required");
+            Assert.notNull(userAuth.password(), "Password is required");
+            userObject.add("username", userAuth.username());
+            userObject.add("password", userAuth.password());
+        } else if (userAuth.grandType().equals("refresh_token")) {
+            Assert.notNull(userAuth.refreshToken(), "Refresh token is required");
+            userObject.add("refresh_token", userAuth.refreshToken());
+        } else throw new Exception("Invalid grand type. Grand type must be password or refresh_token");
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(userObject, headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(authUrl, HttpMethod.POST, requestEntity, String.class);
         return objectMapper.readValue(responseEntity.getBody(), UserToken.class);
