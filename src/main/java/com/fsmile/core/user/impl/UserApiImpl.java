@@ -57,6 +57,11 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
+    public User getUserByDonationId(String donationId) throws Exception {
+        return userRepository.getUserByDonationId(donationId);
+    }
+
+    @Override
     public UserMoresInfos getUserMoresInfos(String userId) {
         return userRepository.getUserMoresInfos(userId);
     }

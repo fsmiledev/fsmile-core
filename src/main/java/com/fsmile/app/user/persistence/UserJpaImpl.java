@@ -153,6 +153,11 @@ public class UserJpaImpl implements UserRepository {
     }
 
     @Override
+    public User getUserByDonationId(String donationId) throws Exception {
+        return null;
+    }
+
+    @Override
     public UserMoresInfos getUserMoresInfos(String userEmail) {
         return null;
     }

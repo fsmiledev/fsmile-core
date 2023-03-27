@@ -2,7 +2,7 @@ spring:
   application:
     name: fsmile
   datasource:
-    url: ${FSMILE_DATABASE_URI:jdbc:postgresql://10.1.1.36:5432/fsmile}
+    url: ${FSMILE_DATABASE_URI:jdbc:postgresql://localhost:5432/fsmile}
     username: ${FSMILE_DATABASE_USER:admin}
     password: ${FSMILE_DATABASE_PASSWORD:admin}
   jpa:
@@ -14,8 +14,8 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: ${FSMILE_OAUTH2_ISSUER_URI:http://10.1.1.36:8080/realms/fsmile}
-          jwk-set-uri: ${FSMILE_OAUTH2_JWK_SET_URI:http://10.1.1.36:8080/realms/fsmile/protocol/openid-connect/certs}
+          issuer-uri: ${FSMILE_OAUTH2_ISSUER_URI:http://localhost:8080/realms/fsmile}
+          jwk-set-uri: ${FSMILE_OAUTH2_JWK_SET_URI:http://localhost:8080/realms/fsmile/protocol/openid-connect/certs}
 
 server:
   port: 1200

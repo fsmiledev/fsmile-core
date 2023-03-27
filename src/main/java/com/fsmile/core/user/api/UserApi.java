@@ -20,6 +20,7 @@ public interface UserApi {
     void addUserMoresInfos(UserMoresInfos moresInfos);
     void updateUserMoresInfos(UserMoresInfos moresInfos);
     User getUserByEmail(String email) throws Exception;
+    User getUserByDonationId(String donationId) throws Exception;
     UserMoresInfos getUserMoresInfos(String userEmail);
     List<Role> getUserRoles(String userId);
     Page<User> findAllUsers(int page, int size);

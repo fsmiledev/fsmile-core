@@ -18,10 +18,10 @@ public interface DonationApi {
     void editDonation(Donation donation);
     Donation getDonation(String donationId);
 
-    void validateDonation(String donationId, DonationStatus validate);
-    void rejectDonation(String donationId, DonationStatus reject);
-    void giveDonation(List<Donation> donations, String beneficiaryId);
-    void confirmDonationGive(List<Donation> donations);
+    void validateDonation(String donationId);
+    void rejectDonation(String donationId);
+    void giveDonation(List<String> donationId, String beneficiaryId);
+    void confirmDonationGive(List<String> donationId);
 
     String addDonationCategory(DonationCategory category);
     void editDonationCategory(DonationCategory category);

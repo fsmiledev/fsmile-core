@@ -97,9 +97,9 @@ public class DonationJpaImpl implements DonationRepository {
     }
 
     @Override
-    public void giveDonations(List<Donation> donations, String beneficiaryId) {
-        List<DonationEntity> donationEntities = donations.stream().map(donation -> {
-            DonationEntity donationEntity =  donationRepository.getReferenceById(donation.donationId());
+    public void giveDonations(List<String> donationIds, String beneficiaryId) {
+        List<DonationEntity> donationEntities = donationIds.stream().map(donationId -> {
+            DonationEntity donationEntity =  donationRepository.getReferenceById(donationId);
             donationEntity.setStatus(DonationStatus.GIVE);
             donationEntity.setBeneficiary(new DonationBeneficiaryEntity(beneficiaryId));
             return donationEntity;
@@ -108,9 +108,9 @@ public class DonationJpaImpl implements DonationRepository {
     }
 
     @Override
-    public void confirmDonationGive(List<Donation> donations) {
-        List<DonationEntity> donationEntities = donations.stream().map(donation -> {
-            DonationEntity donationEntity =  donationRepository.getReferenceById(donation.donationId());
+    public void confirmDonationGive(List<String> donationIds) {
+        List<DonationEntity> donationEntities = donationIds.stream().map(donationId -> {
+            DonationEntity donationEntity =  donationRepository.getReferenceById(donationId);
             donationEntity.setStatus(DonationStatus.RECEIVED);
             return donationEntity;
         }).toList();

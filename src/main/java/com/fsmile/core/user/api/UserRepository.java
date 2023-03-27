@@ -18,6 +18,7 @@ public interface UserRepository {
     void addUserMoresInfos(UserMoresInfos moresInfos);
     void updateUserMoresInfos(UserMoresInfos moresInfos);
     User getUserByEmail(String email) throws Exception;
+    User getUserByDonationId(String donationId) throws Exception;
     UserMoresInfos getUserMoresInfos(String userId);
     List<Role> getUserRoles(String userId);
     Page<User> findAllUsers(int page, int size);

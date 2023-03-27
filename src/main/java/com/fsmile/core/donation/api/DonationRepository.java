@@ -23,9 +23,9 @@ public interface DonationRepository {
 
     void rejectDonation(String donationId);
 
-    void giveDonations(List<Donation> donations, String beneficiaryId);
+    void giveDonations(List<String> donationIds, String beneficiaryId);
 
-    void confirmDonationGive(List<Donation> donations);
+    void confirmDonationGive(List<String> donationIds);
 
     String addDonationCategory(DonationCategory category);
 
