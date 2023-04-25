@@ -1,6 +1,6 @@
 package com.fsmile.core.donation.api;
 
-import com.fsmile.core.user.api.User;
+import com.fsmile.app.user.persistence.User;
 import lombok.Builder;
 
 import java.util.Date;

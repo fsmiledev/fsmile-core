@@ -20,6 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -48,7 +49,6 @@ public class UserJpaImpl implements UserRepository {
 
     @Override
     public UserToken login(UserAuth userAuth) throws Exception {
-
         ObjectMapper objectMapper = new ObjectMapper();
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -72,7 +72,7 @@ public class UserJpaImpl implements UserRepository {
     }
 
     @Override
-    public String createUser(User user) {
+    public String createUser(UserModel user) {
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setUsername(user.username());
         userRepresentation.setFirstName(user.firstName());
@@ -102,7 +102,7 @@ public class UserJpaImpl implements UserRepository {
     }
 
     @Override
-    public void updateProfile(User user) throws Exception {
+    public void updateProfile(UserModel user) throws Exception {
         UserRepresentation userRepresentation = new UserRepresentation();
         assert user.lastName() != null;
         assert user.firstName() != null;
@@ -117,7 +117,7 @@ public class UserJpaImpl implements UserRepository {
 
     @Override
     public void resetUserPassword(ResetPassword resetPassword) throws Exception {
-        User user = getUserByEmail(resetPassword.userEmail());
+        UserModel user = getUserByEmail(resetPassword.userEmail());
         CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
         credentialRepresentation.setType("password");
         credentialRepresentation.setValue(resetPassword.newPassword());
@@ -137,19 +137,13 @@ public class UserJpaImpl implements UserRepository {
     }
 
     @Override
-    public User getUserByEmail(String email) throws Exception {
+    public UserModel getUserByEmail(String email) throws Exception {
         List<UserRepresentation> list = instance.realm(realm).users().searchByEmail(email, true);
         if (list.isEmpty()) throw new Exception("User not found");
         UserRepresentation userR = list.get(0);
         System.out.println(userR.getRealmRoles());
-        return User.builder()
-                .userId(userR.getId())
-                .username(userR.getUsername())
-                .email(userR.getEmail())
-                .lastName(userR.getLastName())
-                .firstName(userR.getFirstName())
-                .roles(userR.getRealmRoles())
-                .build();
+        List<String> role = new ArrayList<>();
+        return new UserRole(userR.getId(), userR.getUsername(),userR.getLastName(), userR.getEmail(), role);
     }
 
     @Override
@@ -168,7 +162,7 @@ public class UserJpaImpl implements UserRepository {
     }
 
     @Override
-    public Page<User> findAllUsers(int page, int size) {
+    public Page<UserModel> findAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<UserEntity>> userEntities = userJpaRepository.findAllBy(pageable);
         return null;

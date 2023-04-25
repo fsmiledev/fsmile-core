@@ -1,6 +1,5 @@
 package com.fsmile.app.user.persistence;
 
-import com.fsmile.core.user.api.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +19,7 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, String> {
     @Async
     CompletableFuture<Page<UserEntity>> findAllBy(Pageable pageable);
     
-    @Query("SELECT u FROM UserEntity u WHERE u.userId IN (SELECT d FROM DonationEntity d WHERE d.donor.userId := donationId)")
+    @Query("SELECT u.donor FROM DonationEntity u WHERE u.donationId =: donationId")
     User findByDonation(@Param("donationId") String donationId);
 
     UserEntity findByEmail(String email);

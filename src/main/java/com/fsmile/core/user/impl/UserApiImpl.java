@@ -1,5 +1,6 @@
 package com.fsmile.core.user.impl;
 
+import com.fsmile.app.user.persistence.User;
 import com.fsmile.core.user.api.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,12 +28,12 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public String  createUser(User user) {
+    public String  createUser(UserModel user) {
         return userRepository.createUser(user);
     }
 
     @Override
-    public void updateProfile(User user) throws Exception {
+    public void updateProfile(UserModel user) throws Exception {
         userRepository.updateProfile(user);
     }
 
@@ -52,12 +53,12 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public User getUserByEmail(String email) throws Exception {
+    public UserModel getUserByEmail(String email) throws Exception {
         return userRepository.getUserByEmail(email);
     }
 
     @Override
-    public User getUserByDonationId(String donationId) throws Exception {
+    public UserModel getUserByDonationId(String donationId) throws Exception {
         return userRepository.getUserByDonationId(donationId);
     }
 
@@ -72,7 +73,7 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public Page<User> findAllUsers(int page, int size) {
+    public Page<UserModel> findAllUsers(int page, int size) {
         return userRepository.findAllUsers(page, size);
     }
 

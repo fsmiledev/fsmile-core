@@ -1,5 +1,6 @@
 package com.fsmile.core.user.api;
 
+import com.fsmile.app.user.persistence.User;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -12,16 +13,16 @@ import java.util.List;
  */
 public interface UserRepository {
     UserToken login(UserAuth userAuth) throws Exception;
-    String createUser(User user);
-    void updateProfile(User user) throws Exception;
+    String createUser(UserModel user);
+    void updateProfile(UserModel user) throws Exception;
     void resetUserPassword(ResetPassword resetPassword) throws Exception;
     void addUserMoresInfos(UserMoresInfos moresInfos);
     void updateUserMoresInfos(UserMoresInfos moresInfos);
-    User getUserByEmail(String email) throws Exception;
-    User getUserByDonationId(String donationId) throws Exception;
+    UserModel getUserByEmail(String email) throws Exception;
+    UserModel getUserByDonationId(String donationId) throws Exception;
     UserMoresInfos getUserMoresInfos(String userId);
     List<Role> getUserRoles(String userId);
-    Page<User> findAllUsers(int page, int size);
+    Page<UserModel> findAllUsers(int page, int size);
     void createUserSetting(UserSetting userSetting);
     void editUserSetting(UserSetting userSetting);
     void createUserConnection(UserConnection connection);

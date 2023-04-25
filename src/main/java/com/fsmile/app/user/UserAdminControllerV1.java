@@ -1,7 +1,7 @@
 package com.fsmile.app.user;
 
 import com.fsmile.core.user.api.ResetPassword;
-import com.fsmile.core.user.api.User;
+import com.fsmile.app.user.persistence.User;
 import com.fsmile.core.user.api.UserApi;
 import com.fsmile.core.user.api.UserAuth;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,7 @@ public class UserAdminControllerV1 {
 
     @GetMapping(path = "getUserByEmail/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) throws Exception {
+        System.out.println(email);
         return ResponseEntity.status(HttpStatus.OK).body(userApi.getUserByEmail(email));
     }
 

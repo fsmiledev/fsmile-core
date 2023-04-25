@@ -65,7 +65,7 @@ public class DonationPublicControllerV1 {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("donations-beneficiary/{beneficiaryId}}")
+    @GetMapping("donations-beneficiary/{beneficiaryId}")
     public ResponseEntity<?> getAllBeneficiary(@PathVariable String beneficiaryId) {
         return ResponseEntity.status(HttpStatus.OK).body(donationApi.getDonationBeneficiary(beneficiaryId));
     }
