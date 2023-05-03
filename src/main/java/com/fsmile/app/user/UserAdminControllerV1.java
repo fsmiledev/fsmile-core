@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("api/user/v0")
+@RequestMapping("api/v0/user")
 @RequiredArgsConstructor
 public class UserAdminControllerV1 {
 

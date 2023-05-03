@@ -26,5 +26,11 @@ public record ErrorMessageImpl(HttpStatus status, String message, List<String> e
     public ProblemDetail getBody() {
         return ProblemDetail.forStatusAndDetail(status, message);
     }
+    @Override
+    public String toString() {
+        return message;
+    }
+
+
 
 }

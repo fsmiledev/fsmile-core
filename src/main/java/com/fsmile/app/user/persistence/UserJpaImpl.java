@@ -2,6 +2,7 @@ package com.fsmile.app.user.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsmile.core.user.api.*;
+import com.fsmile.utils.BundleUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,19 +57,26 @@ public class UserJpaImpl implements UserRepository {
         MultiValueMap<String, String> userObject = new LinkedMultiValueMap<>();
         userObject.add("client_id", clientId);
         userObject.add("grant_type", userAuth.grandType());
-        Assert.notNull(userAuth.grandType(), "Grand type is required");
+        Assert.notNull(userAuth.grandType(), BundleUtils.message("grand_type_required"));
         if (userAuth.grandType().equals("password")) {
-            Assert.notNull(userAuth.username(), "Username is required");
-            Assert.notNull(userAuth.password(), "Password is required");
+            Assert.notNull(userAuth.username(), BundleUtils.message("username_required"));
+            Assert.notNull(userAuth.password(),  BundleUtils.message("password_required"));
             userObject.add("username", userAuth.username());
             userObject.add("password", userAuth.password());
         } else if (userAuth.grandType().equals("refresh_token")) {
-            Assert.notNull(userAuth.refreshToken(), "Refresh token is required");
+            Assert.notNull(userAuth.refreshToken(),  BundleUtils.message("refresh_token_required"));
             userObject.add("refresh_token", userAuth.refreshToken());
-        } else throw new Exception("Invalid grand type. Grand type must be password or refresh_token");
+        } else throw new Exception( BundleUtils.message("invalid_grand_type"));
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(userObject, headers);
-        ResponseEntity<String> responseEntity = restTemplate.exchange(authUrl, HttpMethod.POST, requestEntity, String.class);
-        return objectMapper.readValue(responseEntity.getBody(), UserToken.class);
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.exchange(authUrl, HttpMethod.POST, requestEntity, String.class);
+            return objectMapper.readValue(responseEntity.getBody(), UserToken.class);
+        } catch (Exception e) {
+            String message = e.getMessage().contains("401 Unauthorized") ?
+                    BundleUtils.message("bad_credentials") :
+                    BundleUtils.message("error_during_connection") + ". " + BundleUtils.message("contact_administrator");
+            throw new Exception(message);
+        }
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.HashMap;
+
 /**
  * @author raphael
  * @project fsmile
@@ -28,9 +30,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
+    public ResponseEntity<?> handleGenericException(Exception ex) {
         ErrorResponse errorResponse = new ErrorMessageImpl(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), null);
-        ex.printStackTrace();
-        return ResponseEntity.status(errorResponse.getStatusCode()).body(errorResponse);
+        HashMap<String, Object> resp = new HashMap<String, Object>();
+        resp.put("code", errorResponse.getBody().getTitle());
+        resp.put("message", errorResponse.getBody().getDetail());
+       // ex.printStackTrace();
+        return ResponseEntity.status(errorResponse.getStatusCode()).body(resp);
     }
 }
