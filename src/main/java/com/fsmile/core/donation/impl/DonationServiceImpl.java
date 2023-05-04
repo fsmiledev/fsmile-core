@@ -16,13 +16,13 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DonationApiImpl implements DonationApi {
+public class DonationServiceImpl implements DonationService {
 
     private final DonationRepository donationRepository;
 
 
     @Override
-    public String addDonation(Donation donation) {
+    public String addDonation(DonationModel donation) {
         donationRepository.addDonation(donation);
         return donation.donationId();
     }
@@ -38,13 +38,13 @@ public class DonationApiImpl implements DonationApi {
     }
 
     @Override
-    public void editDonation(Donation donation) {
+    public void editDonation(DonationModel donation) {
         donationRepository.editDonation(donation);
     }
 
     @Override
-    public Donation getDonation(String donationId) {
-        return null;
+    public DonationModel getDonation(String donationId) {
+        return donationRepository.getDonation(donationId);
     }
 
     @Override
@@ -55,7 +55,6 @@ public class DonationApiImpl implements DonationApi {
     @Override
     public void rejectDonation(String donationId) {
         donationRepository.rejectDonation(donationId);
-
     }
 
     @Override
@@ -84,12 +83,12 @@ public class DonationApiImpl implements DonationApi {
     }
 
     @Override
-    public Page<Donation> findAllDonation(int page, int size) throws Exception {
+    public Page<DonationModel> findAllDonation(int page, int size) throws Exception {
         return donationRepository.findAllDonation(page, size);
     }
 
     @Override
-    public Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
+    public Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
         return donationRepository.findDonationsByStatus(page, size, status);
     }
 

@@ -13,9 +13,6 @@ import java.util.Date;
 @Builder
 public record DonationImg(
         String imgId,
-        String donationId,
-        String imgUrl,
-        Date dateUpdated,
-        Date dateCreated
+        String imgUrl
 ) {
 }

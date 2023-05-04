@@ -26,11 +26,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+
 /**
- * Project trunk
- * Package com.fsmile.admin.domain.user.persistence
- * Author revouna
- * Date 21/03/2023
+ This class provides implementation for the {@link UserRepository} interface.
+ It interacts with the user data stored in a database using JPA and with a Keycloak server
+ for authentication and authorization.
+ @author Raphael Evouna
+ @since 21/03/2023
  */
 
 @Slf4j
@@ -38,16 +40,37 @@ import java.util.concurrent.CompletableFuture;
 @Transactional
 @RequiredArgsConstructor
 public class UserJpaImpl implements UserRepository {
+
+
     @Value("${auth.realm.name}")
     private String realm;
+
     @Value("${auth.realm.client-id}")
     private String clientId;
+
     @Value("${auth.server.token}")
     private String authUrl;
+
     private final Keycloak instance;
+
     private final UserJpaRepository userJpaRepository;
 
 
+    /**
+     Logs the user in with the provided authentication credentials.
+     Create an ObjectMapper instance to map objects to JSON and vice versa.
+     Create a RestTemplate instance to handle HTTP requests
+     Create a HttpHeaders instance to set the Content-Type header to application/x-www-form-urlencoded
+     Create a MultiValueMap instance to hold the user authentication information
+     Validate the user authentication information
+     Create an HttpEntity instance to hold the user authentication information and headers
+     Send a POST request to the Keycloak authentication URL with the user authentication information and headers
+     Map the response JSON to a UserToken object and return it
+     Handle any errors that occur during the authentication process
+     @param userAuth the authentication credentials of the user
+     @return a {@link UserToken} object containing the access and refresh tokens
+     @throws Exception if there is an error during authentication or authorization
+     */
     @Override
     public UserToken login(UserAuth userAuth) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -79,6 +102,11 @@ public class UserJpaImpl implements UserRepository {
         }
     }
 
+    /**
+     Creates a new user with the provided user data.
+     @param user the user data to create the user
+     @return the ID of the created user
+     */
     @Override
     public String createUser(UserModel user) {
         UserRepresentation userRepresentation = new UserRepresentation();

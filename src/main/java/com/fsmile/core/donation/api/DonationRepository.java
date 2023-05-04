@@ -11,13 +11,13 @@ import java.util.List;
  * Date 21/02/2023
  */
 public interface DonationRepository {
-    void addDonation(Donation donation);
+    void addDonation(DonationModel donation);
     void deleteDonationImg(String imgId);
 
     void deleteDonation(String donationId);
 
-    void editDonation(Donation donation);
-    Donation getDonation(String donationId);
+    void editDonation(DonationModel donation);
+    DonationModel getDonation(String donationId);
 
     void validateDonation(String donationId);
 
@@ -33,8 +33,8 @@ public interface DonationRepository {
 
     List<DonationCategory> findAllCategories();
 
-    Page<Donation> findAllDonation(int page, int size) throws Exception;
-    Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
+    Page<DonationModel> findAllDonation(int page, int size) throws Exception;
+    Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
 
     DonationBeneficiary getDonationBeneficiary(String beneficiaryId);
     Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size);

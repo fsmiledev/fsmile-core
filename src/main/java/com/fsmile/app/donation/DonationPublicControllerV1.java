@@ -1,7 +1,8 @@
 package com.fsmile.app.donation;
 
-import com.fsmile.core.donation.api.Donation;
-import com.fsmile.core.donation.api.DonationApi;
+import com.fsmile.app.donation.persistence.dto.AddDonation;
+import com.fsmile.core.donation.api.DonationModel;
+import com.fsmile.core.donation.api.DonationService;
 import com.fsmile.core.donation.api.DonationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,59 +21,59 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/donation/public")
 public class DonationPublicControllerV1 {
 
-    private final DonationApi donationApi;
+    private final DonationService donationService;
 
     @GetMapping("donation/{donationId}")
     public ResponseEntity<?> getDonationById(@PathVariable String donationId) {
-        return ResponseEntity.ok(donationApi.getDonation(donationId));
+        return ResponseEntity.ok(donationService.getDonation(donationId));
     }
 
     @GetMapping("validate-donations/{page}/{size}")
     public ResponseEntity<?> getValidateDonation(@PathVariable int page, @PathVariable int size) throws Exception {
-        return ResponseEntity.ok(donationApi.findDonationsByStatus(page, size, DonationStatus.VALIDATE));
+        return ResponseEntity.ok(donationService.findDonationsByStatus(page, size, DonationStatus.VALIDATE));
     }
 
     @GetMapping("received-donations/{page}/{size}")
     public ResponseEntity<?> getReceivedDonation(@PathVariable int page, @PathVariable int size) throws Exception {
-        return ResponseEntity.ok(donationApi.findDonationsByStatus(page, size, DonationStatus.RECEIVED));
+        return ResponseEntity.ok(donationService.findDonationsByStatus(page, size, DonationStatus.RECEIVED));
     }
 
     @GetMapping("donations-category")
     public ResponseEntity<?> getDonationCategories() {
-        return ResponseEntity.ok(donationApi.findAllCategories());
+        return ResponseEntity.ok(donationService.findAllCategories());
     }
 
     @PostMapping("make-donation")
-    public ResponseEntity<?> makeDonation(@RequestBody Donation donation) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(donationApi.addDonation(donation));
+    public ResponseEntity<?> makeDonation(@RequestBody AddDonation donation) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(donationService.addDonation(donation));
     }
 
     @PutMapping("edit-donation")
-    public ResponseEntity<?> editDonation(@RequestBody Donation donation) {
-        donationApi.editDonation(donation);
+    public ResponseEntity<?> editDonation(@RequestBody AddDonation donation) {
+        donationService.editDonation(donation);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("delete-donation/{donationId}")
     public ResponseEntity<?> deleteDonation(@PathVariable String donationId) {
-        donationApi.deleteDonation(donationId);
+        donationService.deleteDonation(donationId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("delete-donation/{donationImgId}")
     public ResponseEntity<?> deleteDonationImg(@PathVariable String donationImgId) {
-        donationApi.deleteDonationImg(donationImgId);
+        donationService.deleteDonationImg(donationImgId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("donations-beneficiary/{beneficiaryId}")
     public ResponseEntity<?> getAllBeneficiary(@PathVariable String beneficiaryId) {
-        return ResponseEntity.status(HttpStatus.OK).body(donationApi.getDonationBeneficiary(beneficiaryId));
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.getDonationBeneficiary(beneficiaryId));
     }
 
     @GetMapping("donations-beneficiaries/{page}/{size}")
     public ResponseEntity<?> getAllBeneficiaries(@PathVariable int page, @PathVariable int size) {
-        return ResponseEntity.status(HttpStatus.OK).body(donationApi.getAllDonationBeneficiaries(page, size));
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.getAllDonationBeneficiaries(page, size));
     }
 
 

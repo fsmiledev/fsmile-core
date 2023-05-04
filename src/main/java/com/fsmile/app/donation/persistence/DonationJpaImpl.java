@@ -1,15 +1,16 @@
 package com.fsmile.app.donation.persistence;
 
+import com.fsmile.app.donation.persistence.dto.AddDonation;
 import com.fsmile.app.user.persistence.UserEntity;
 import com.fsmile.core.donation.api.*;
 import com.fsmile.utils.MapUtils;
 import com.fsmile.utils.StringUtils;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -32,19 +33,22 @@ public class DonationJpaImpl implements DonationRepository {
     private final DonationImgEntityRepository donationImgRepository;
 
     @Override
-    public void addDonation(Donation donation) {
+    public void addDonation(DonationModel donation) {
+        AddDonation add = (AddDonation) donation;
         String donationId = StringUtils.uuid();
         DonationEntity s = DonationEntity.builder()
                 .donationId(donationId)
-                .isAnonymous(donation.isAnonymous())
+                .donationName(add.donationName())
+                .isAnonymous(add.isAnonymous())
                 .status(DonationStatus.SAVED)
-                .donor(donation.isAnonymous() ? null : new UserEntity(donation.donor().userId()))
-                .category(new DonationCategoryEntity(donation.category().categoryId()))
+                .donor(add.isAnonymous() ? null : new UserEntity(add.donorId()))
+                .category(new DonationCategoryEntity(add.categoryId()))
                 .build();
         donationRepository.save(s);
-        List<DonationImgEntity> donationImgEntities = donation.donationImgs().stream().map(img -> DonationImgEntity
+        List<DonationImgEntity> donationImgEntities = add.donationImgs().stream().map(img -> DonationImgEntity
                 .builder()
-                .imgId(StringUtils.uuid()).donationId(donationId)
+                .imgId(StringUtils.uuid())
+                .donation(s)
                 .imgUrl(img.imgUrl())
                 .build()).toList();
         donationImgRepository.saveAll(donationImgEntities);
@@ -62,23 +66,26 @@ public class DonationJpaImpl implements DonationRepository {
     }
 
     @Override
-    public void editDonation(Donation donation) {
-        DonationEntity donationEntity = donationRepository.getReferenceById(donation.donationId());
-        assert donation.category() != null;
+    public void editDonation(DonationModel donation) {
+        donation = new AddDonation();
+        AddDonation obj = (AddDonation) donation;
+        DonationEntity donationEntity = donationRepository.getReferenceById(obj.donationId());
+        if (obj.categoryId() != null){
+            donationEntity.setCategory(new DonationCategoryEntity(obj.categoryId()));
+        }
         donationEntity.setDonationName(donation.donationName());
-        donationEntity.setCategory(new DonationCategoryEntity(donation.category().categoryId()));
         donationRepository.save(donationEntity);
         List<DonationImgEntity> donationImgEntities = donation.donationImgs().stream().map(img -> DonationImgEntity
                 .builder()
                 .imgId(StringUtils.uuid())
-                .donationId(donationEntity.getDonationId())
+                .donation(donationEntity)
                 .imgUrl(img.imgUrl())
                 .build()).toList();
         donationImgRepository.saveAll(donationImgEntities);
     }
 
     @Override
-    public Donation getDonation(String donationId) {
+    public DonationModel getDonation(String donationId) {
         return null;
     }
 
@@ -140,20 +147,18 @@ public class DonationJpaImpl implements DonationRepository {
         return donationCategoryRepository.findAll().stream().map(category -> DonationCategory.builder()
                 .categoryId(category.categoryId)
                 .categoryName(category.categoryName)
-                .createdDate(category.getCreatedDate())
-                .updatedDate(category.getUpdatedDate())
                 .build()).toList();
     }
 
     @Override
-    public Page<Donation> findAllDonation(int page, int size) throws Exception {
+    public Page<DonationModel> findAllDonation(int page, int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findAllBy(pageable);
         return MapUtils.mapDonationPageToDtoPage(donations);
     }
 
     @Override
-    public Page<Donation> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
+    public Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findDonationEntityByStatus(status, pageable);
         return MapUtils.mapDonationPageToDtoPage(donations);

@@ -40,7 +40,6 @@ public class UserAdminControllerV1 {
 
     @GetMapping(path = "getUserByEmail/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) throws Exception {
-        System.out.println(email);
         return ResponseEntity.status(HttpStatus.OK).body(userApi.getUserByEmail(email));
     }
 

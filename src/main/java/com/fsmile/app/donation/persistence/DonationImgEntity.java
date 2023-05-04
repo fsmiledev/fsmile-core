@@ -1,9 +1,6 @@
 package com.fsmile.app.donation.persistence;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,13 +27,13 @@ public class DonationImgEntity {
 
     @Id
     private String imgId;
-    private String donationId;
     private String imgUrl;
-
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdDate;
     @UpdateTimestamp
     @Column(updatable = false)
     private Date updatedDate;
+    @ManyToOne
+    private DonationEntity donation;
 }

@@ -1,17 +1,13 @@
 package com.fsmile.app.donation;
 
-import com.fsmile.core.donation.api.Donation;
-import com.fsmile.core.donation.api.DonationApi;
+import com.fsmile.core.donation.api.DonationService;
 import com.fsmile.core.donation.api.DonationCategory;
-import com.fsmile.core.donation.api.DonationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Project trunk
@@ -22,48 +18,48 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/donation/public/donation")
+@RequestMapping("api/v0/donation/private")
 public class DonationPrivateControllerV1 {
 
-    private final DonationApi donationApi;
+    private final DonationService donationService;
 
-    @GetMapping("donations/{size}/{page}")
-    public ResponseEntity<?> getAllDonations(@PathVariable int size, @PathVariable int page) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(donationApi.findAllDonation(size, page));
+    @GetMapping("donations/{page}/{size}")
+    public ResponseEntity<?> getAllDonations( @PathVariable int page, @PathVariable int size) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.findAllDonation(page, size));
     }
 
     @PutMapping("validate-donation")
     public ResponseEntity<?> validateDonation(@RequestBody String donationId) {
-        donationApi.validateDonation(donationId);
+        donationService.validateDonation(donationId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("reject-donation")
     public ResponseEntity<?> rejectDonation(@RequestBody String donationId) {
-        donationApi.rejectDonation(donationId);
+        donationService.rejectDonation(donationId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("give-donation/{beneficiaryId}")
     public ResponseEntity<?> giveDonation(@RequestBody List<String> donationIds, @PathVariable String beneficiaryId) {
-        donationApi.giveDonation(donationIds, beneficiaryId);
+        donationService.giveDonation(donationIds, beneficiaryId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("confirm-give-donation")
     public ResponseEntity<?> confirmGiveDonation(@RequestBody List<String> donationIds) {
-        donationApi.confirmDonationGive(donationIds);
+        donationService.confirmDonationGive(donationIds);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("add-donation-category")
     public ResponseEntity<?> addDonationCategory(@RequestBody DonationCategory category) {
-        return ResponseEntity.status(HttpStatus.OK).body(donationApi.addDonationCategory(category));
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.addDonationCategory(category));
     }
 
     @PutMapping("edit-donation-category")
     public ResponseEntity<?> editDonationCategory(@RequestBody DonationCategory category) {
-        donationApi.editDonationCategory(category);
+        donationService.editDonationCategory(category);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

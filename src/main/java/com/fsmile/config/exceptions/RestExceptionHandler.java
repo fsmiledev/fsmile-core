@@ -35,7 +35,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         HashMap<String, Object> resp = new HashMap<String, Object>();
         resp.put("code", errorResponse.getBody().getTitle());
         resp.put("message", errorResponse.getBody().getDetail());
-       // ex.printStackTrace();
+        ex.printStackTrace();
         return ResponseEntity.status(errorResponse.getStatusCode()).body(resp);
     }
 }

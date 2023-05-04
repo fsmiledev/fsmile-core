@@ -35,9 +35,10 @@ public class DonationEntity {
     private UserEntity donor;
     @ManyToOne
     private DonationBeneficiaryEntity beneficiary;
+    @Enumerated(EnumType.STRING)
     private DonationStatus status;
     private boolean isAnonymous;
-    @OneToMany
+    @OneToMany(mappedBy = "donation", cascade = CascadeType.ALL)
     private List<DonationImgEntity> donationImgs;
     @ManyToOne
     private DonationCategoryEntity category;
