@@ -62,9 +62,5 @@ public class DonationPrivateControllerV1 {
         donationService.editDonationCategory(category);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-
-
-
 }
 

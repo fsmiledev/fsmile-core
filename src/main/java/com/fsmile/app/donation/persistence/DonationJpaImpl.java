@@ -1,6 +1,7 @@
 package com.fsmile.app.donation.persistence;
 
 import com.fsmile.app.donation.persistence.dto.AddDonation;
+import com.fsmile.app.donation.persistence.dto.DonationFull;
 import com.fsmile.app.user.persistence.UserEntity;
 import com.fsmile.core.donation.api.*;
 import com.fsmile.utils.MapUtils;
@@ -86,7 +87,27 @@ public class DonationJpaImpl implements DonationRepository {
 
     @Override
     public DonationModel getDonation(String donationId) {
-        return null;
+        DonationEntity d = donationRepository.getReferenceById(donationId);
+        List<DonationImgEntity> donationImgEntities = d.getDonationImgs().stream().map(img -> DonationImgEntity
+                .builder()
+                .imgId(StringUtils.uuid())
+                .donation(d)
+                .imgUrl(img.getImgUrl())
+                .build()).toList();
+        DonationFull donation = new DonationFull(
+                d.getDonationId(),
+                d.getDonationName(),
+                d.getStatus(),
+                d.isAnonymous(),
+                d.getDonationImgs().stream().map(img -> DonationImg
+                        .builder()
+                        .imgId(StringUtils.uuid())
+                        .imgUrl(img.getImgUrl())
+                        .build()).toList(),
+                d.getCreatedDate(),
+                DonationCategory.builder().categoryId(d.getCategory().getCategoryId()).categoryName(d.getCategory().getCategoryName()).build()
+        );
+        return donation;
     }
 
     @Override
@@ -102,6 +123,7 @@ public class DonationJpaImpl implements DonationRepository {
         donationEntity.setStatus(DonationStatus.REJECT);
         donationRepository.save(donationEntity);
     }
+
 
     @Override
     public void giveDonations(List<String> donationIds, String beneficiaryId) {
