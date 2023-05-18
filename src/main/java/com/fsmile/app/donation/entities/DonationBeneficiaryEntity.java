@@ -1,4 +1,4 @@
-package com.fsmile.app.donation.persistence;
+package com.fsmile.app.donation.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,15 +21,30 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "DONATION_CATEGORY")
+@Table(name = "DONATION_BENEFICIARY")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class DonationCategoryEntity {
+public class DonationBeneficiaryEntity {
+
     @Id
-    String categoryId;
-    String categoryName;
+    String beneficiaryId;
+    String name;
+    String description;
+    String email;
+    String rib;
+    Long phoneNumber1;
+    Long phoneNumber2;
+    Long phoneNumber3;
+
+    String addressLine1;
+    String addressLine2;
+    String addressLine3;
+
+    String imgUrl;
+    String doc;
+
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdDate;
@@ -37,7 +52,7 @@ public class DonationCategoryEntity {
     @Column(updatable = false)
     private Date updatedDate;
 
-    public DonationCategoryEntity(String categoryId) {
-        this.categoryId = categoryId;
+    public DonationBeneficiaryEntity(String beneficiaryId) {
+        this.beneficiaryId = beneficiaryId;
     }
 }

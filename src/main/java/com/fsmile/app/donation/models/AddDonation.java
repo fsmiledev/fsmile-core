@@ -1,6 +1,5 @@
-package com.fsmile.app.donation.persistence.dto;
+package com.fsmile.app.donation.models;
 
-import com.fsmile.core.donation.api.DonationCategory;
 import com.fsmile.core.donation.api.DonationImg;
 import com.fsmile.core.donation.api.DonationStatus;
 import lombok.Getter;

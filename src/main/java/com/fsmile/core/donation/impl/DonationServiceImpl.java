@@ -1,11 +1,14 @@
 package com.fsmile.core.donation.impl;
 
 import com.fsmile.core.donation.api.*;
+import com.fsmile.utils.BundleUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Project trunk
@@ -18,87 +21,104 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DonationServiceImpl implements DonationService {
 
-    private final DonationRepository donationRepository;
+    private final DonationCore donationCore;
 
 
     @Override
     public String addDonation(DonationModel donation) {
-        donationRepository.addDonation(donation);
+        donationCore.addDonation(donation);
         return donation.donationId();
     }
 
     @Override
     public void deleteDonationImg(String imgId) {
-        donationRepository.deleteDonationImg(imgId);
+        donationCore.deleteDonationImg(imgId);
     }
 
     @Override
     public void deleteDonation(String donationId) {
-        donationRepository.deleteDonation(donationId);
+        donationCore.deleteDonation(donationId);
     }
 
     @Override
     public void editDonation(DonationModel donation) {
-        donationRepository.editDonation(donation);
+        donationCore.editDonation(donation);
     }
 
     @Override
     public DonationModel getDonation(String donationId) {
-        return donationRepository.getDonation(donationId);
+        return donationCore.getDonation(donationId);
     }
 
     @Override
     public void validateDonation(String donationId) {
-        donationRepository.validateDonation(donationId);
+        donationCore.validateDonation(donationId);
     }
 
     @Override
     public void rejectDonation(String donationId) {
-        donationRepository.rejectDonation(donationId);
+        donationCore.rejectDonation(donationId);
     }
 
     @Override
     public void giveDonation(List<String> donationIds, String beneficiaryId) {
-        donationRepository.giveDonations(donationIds, beneficiaryId);
+        donationCore.giveDonations(donationIds, beneficiaryId);
     }
 
     @Override
     public void confirmDonationGive(List<String> donationIds) {
-        donationRepository.confirmDonationGive(donationIds);
+        donationCore.confirmDonationGive(donationIds);
     }
 
     @Override
     public String addDonationCategory(DonationCategory category) {
-        return donationRepository.addDonationCategory(category);
+        return donationCore.addDonationCategory(category);
     }
 
     @Override
     public void editDonationCategory(DonationCategory category) {
-        donationRepository.editDonationCategory(category);
+        donationCore.editDonationCategory(category);
     }
 
     @Override
     public List<DonationCategory> findAllCategories() {
-        return donationRepository.findAllCategories();
+        return donationCore.findAllCategories();
     }
 
     @Override
     public Page<DonationModel> findAllDonation(int page, int size) throws Exception {
-        return donationRepository.findAllDonation(page, size);
+        return donationCore.findAllDonation(page, size);
     }
 
     @Override
     public Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
-        return donationRepository.findDonationsByStatus(page, size, status);
+        return donationCore.findDonationsByStatus(page, size, status);
+    }
+
+    @Override
+    public Map<String, String> addDonationBeneficiary(DonationBeneficiary beneficiary) {
+        String id = donationCore.addDonationBeneficiary(beneficiary);
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id);
+        response.put("message", BundleUtils.message("donation_beneficiary_added"));
+        return response;
+    }
+
+    @Override
+    public Map<String, String> editDonationBeneficiary(DonationBeneficiary beneficiary) {
+        donationCore.addDonationBeneficiary(beneficiary);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", BundleUtils.message("donation_beneficiary_edited"));
+        return response;
     }
 
     @Override
     public DonationBeneficiary getDonationBeneficiary(String beneficiaryId) {
-        return donationRepository.getDonationBeneficiary(beneficiaryId);
+        return donationCore.getDonationBeneficiary(beneficiaryId);
     }
 
     @Override
-    public Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) {
-        return donationRepository.getAllDonationBeneficiaries(page, size);
+    public Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) throws Exception {
+        return donationCore.getAllDonationBeneficiaries(page, size);
     }
 }

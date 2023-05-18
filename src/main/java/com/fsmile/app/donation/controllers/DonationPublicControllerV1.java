@@ -1,7 +1,6 @@
-package com.fsmile.app.donation;
+package com.fsmile.app.donation.controllers;
 
-import com.fsmile.app.donation.persistence.dto.AddDonation;
-import com.fsmile.core.donation.api.DonationModel;
+import com.fsmile.app.donation.models.AddDonation;
 import com.fsmile.core.donation.api.DonationService;
 import com.fsmile.core.donation.api.DonationStatus;
 import lombok.RequiredArgsConstructor;
@@ -72,7 +71,7 @@ public class DonationPublicControllerV1 {
     }
 
     @GetMapping("donations-beneficiaries/{page}/{size}")
-    public ResponseEntity<?> getAllBeneficiaries(@PathVariable int page, @PathVariable int size) {
+    public ResponseEntity<?> getAllBeneficiaries(@PathVariable int page, @PathVariable int size) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(donationService.getAllDonationBeneficiaries(page, size));
     }
 

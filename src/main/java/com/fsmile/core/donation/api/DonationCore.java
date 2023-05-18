@@ -10,7 +10,7 @@ import java.util.List;
  * Author revouna
  * Date 21/02/2023
  */
-public interface DonationRepository {
+public interface DonationCore {
     void addDonation(DonationModel donation);
     void deleteDonationImg(String imgId);
 
@@ -36,7 +36,8 @@ public interface DonationRepository {
     Page<DonationModel> findAllDonation(int page, int size) throws Exception;
     Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
 
+    String addDonationBeneficiary(DonationBeneficiary beneficiary);
     DonationBeneficiary getDonationBeneficiary(String beneficiaryId);
-    Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size);
+    Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) throws Exception;
 
 }

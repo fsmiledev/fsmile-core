@@ -1,7 +1,7 @@
 package com.fsmile.utils;
 
-import com.fsmile.app.donation.persistence.DonationEntity;
-import com.fsmile.app.donation.persistence.dto.DonationFull;
+import com.fsmile.app.donation.entities.DonationEntity;
+import com.fsmile.app.donation.models.DonationFull;
 import com.fsmile.core.donation.api.DonationCategory;
 import com.fsmile.core.donation.api.DonationImg;
 import com.fsmile.core.donation.api.DonationModel;

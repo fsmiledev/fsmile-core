@@ -1,4 +1,4 @@
-package com.fsmile.app.donation.persistence;
+package com.fsmile.app.donation.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

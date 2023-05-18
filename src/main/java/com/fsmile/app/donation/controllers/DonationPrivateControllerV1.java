@@ -1,5 +1,6 @@
-package com.fsmile.app.donation;
+package com.fsmile.app.donation.controllers;
 
+import com.fsmile.core.donation.api.DonationBeneficiary;
 import com.fsmile.core.donation.api.DonationService;
 import com.fsmile.core.donation.api.DonationCategory;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,16 @@ public class DonationPrivateControllerV1 {
     public ResponseEntity<?> editDonationCategory(@RequestBody DonationCategory category) {
         donationService.editDonationCategory(category);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("add-donation-beneficiary")
+    public ResponseEntity<?> addDonationBeneficiary(@RequestBody DonationBeneficiary beneficiary) {
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.addDonationBeneficiary(beneficiary));
+    }
+
+    @PutMapping("edit-donation-beneficiary")
+    public ResponseEntity<?> editDonationBeneficiary(@RequestBody DonationBeneficiary beneficiary) {
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.editDonationBeneficiary(beneficiary));
     }
 }
 

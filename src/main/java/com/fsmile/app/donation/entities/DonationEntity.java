@@ -1,4 +1,4 @@
-package com.fsmile.app.donation.persistence;
+package com.fsmile.app.donation.entities;
 
 import com.fsmile.app.user.persistence.UserEntity;
 import com.fsmile.core.donation.api.DonationStatus;

@@ -1,5 +1,7 @@
-package com.fsmile.app.donation.persistence;
+package com.fsmile.app.donation.repositories;
 
+import com.fsmile.app.donation.entities.DonationCategoryEntity;
+import com.fsmile.app.donation.entities.DonationEntity;
 import com.fsmile.core.donation.api.DonationStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

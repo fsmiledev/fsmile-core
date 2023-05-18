@@ -3,8 +3,8 @@ spring:
     name: fsmile
   datasource:
     url: ${FSMILE_DATABASE_URI:jdbc:postgresql://localhost:5432/fsmile}
-    username: ${FSMILE_DATABASE_USER:admin}
-    password: ${FSMILE_DATABASE_PASSWORD:admin}
+    username: ${FSMILE_DATABASE_USER:postgres}
+    password: ${FSMILE_DATABASE_PASSWORD:Admin2023}
   jpa:
     hibernate:
       ddl-auto: update

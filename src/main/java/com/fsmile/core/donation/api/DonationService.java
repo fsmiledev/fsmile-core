@@ -3,6 +3,7 @@ package com.fsmile.core.donation.api;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Project trunk
@@ -30,8 +31,10 @@ public interface DonationService {
     Page<DonationModel> findAllDonation(int page, int size) throws Exception;
     Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception;
 
+    Map<String, String> addDonationBeneficiary(DonationBeneficiary beneficiary);
+    Map<String, String> editDonationBeneficiary(DonationBeneficiary beneficiary);
     DonationBeneficiary getDonationBeneficiary(String beneficiaryId);
-    Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size);
+    Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) throws Exception;
 
 
 }
