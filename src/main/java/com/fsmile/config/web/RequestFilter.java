@@ -29,7 +29,7 @@ public class RequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String headerLang = request.getHeader("Accept-Language");
         if (headerLang != null){
-            Locale.setDefault( Locale.lookup(Locale.LanguageRange.parse(headerLang), LOCALES));
+            Locale.setDefault(Locale.lookup(Locale.LanguageRange.parse(headerLang), LOCALES));
         }
         filterChain.doFilter(request, response);
     }

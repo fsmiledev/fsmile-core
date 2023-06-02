@@ -13,7 +13,8 @@ import java.util.Date;
 @Builder
 public record DonationCategory(
         String categoryId,
-        String categoryName
+        String categoryName,
+        String categoryImg
 ) {
 
 

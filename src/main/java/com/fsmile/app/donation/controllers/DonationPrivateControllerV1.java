@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v0/donation/private")
+@RequestMapping("api/v1/donation/private")
 public class DonationPrivateControllerV1 {
 
     private final DonationService donationService;
