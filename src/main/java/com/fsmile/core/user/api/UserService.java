@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2/18/23 : 6:46 PM
  */
 
-public interface UserApi {
+public interface UserService {
 
     UserToken login(UserAuth userAuth) throws Exception;
     String createUser(UserModel user);

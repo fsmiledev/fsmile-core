@@ -1,6 +1,6 @@
 package com.fsmile;
 
-import java.util.List;
+import java.util.Locale;
 
 /**
  * Project fsmile-core
@@ -9,11 +9,7 @@ import java.util.List;
  * Date 02/05/2023
  */
 public class po {
-
-    public void tst(List params) {
-
-
-
-
+    public static void main(String[] args) {
+        System.out.println(Locale.US);
     }
 }

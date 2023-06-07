@@ -1,13 +1,19 @@
 package com.fsmile.core.donation.impl;
 
 import com.fsmile.core.donation.api.*;
+import com.fsmile.core.language.api.Language;
+import com.fsmile.core.language.api.LanguageTextService;
+import com.fsmile.core.language.api.ParentAttribute;
+import com.fsmile.core.language.api.Text;
 import com.fsmile.utils.BundleUtils;
+import com.fsmile.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -22,11 +28,22 @@ import java.util.Map;
 public class DonationServiceImpl implements DonationService {
 
     private final DonationCore donationCore;
+    private final LanguageTextService textService;
 
 
     @Override
     public String addDonation(DonationModel donation) {
         donationCore.addDonation(donation);
+        textService.getEnableLanguage().forEach(language -> {
+            Text text = Text.builder()
+                    .textId(StringUtils.uuid())
+                    .parentId(donation.donationId())
+                    .parentAttribute(ParentAttribute.DONATION_NAME)
+                    .language(language)
+                    .wording(language.locale() == Locale.getDefault() ? donation.donationName(): "")
+                    .build();
+            textService.addText(text);
+        });
         return donation.donationId();
     }
 

@@ -1,6 +1,6 @@
 package com.fsmile.app.donation.controllers;
 
-import com.fsmile.app.donation.models.AddDonation;
+import com.fsmile.app.donation.models.DonationAddModel;
 import com.fsmile.core.donation.api.DonationService;
 import com.fsmile.core.donation.api.DonationStatus;
 import lombok.RequiredArgsConstructor;
@@ -43,12 +43,12 @@ public class DonationPublicControllerV1 {
     }
 
     @PostMapping("make-donation")
-    public ResponseEntity<?> makeDonation(@RequestBody AddDonation donation) {
+    public ResponseEntity<?> makeDonation(@RequestBody DonationAddModel donation) {
         return ResponseEntity.status(HttpStatus.CREATED).body(donationService.addDonation(donation));
     }
 
     @PutMapping("edit-donation")
-    public ResponseEntity<?> editDonation(@RequestBody AddDonation donation) {
+    public ResponseEntity<?> editDonation(@RequestBody DonationAddModel donation) {
         donationService.editDonation(donation);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

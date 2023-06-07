@@ -14,8 +14,7 @@ import java.util.Date;
 public record DonationCategory(
         String categoryId,
         String categoryName,
+        String categoryWording,
         String categoryImg
 ) {
-
-
 }

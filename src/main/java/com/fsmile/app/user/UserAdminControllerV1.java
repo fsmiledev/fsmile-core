@@ -2,7 +2,7 @@ package com.fsmile.app.user;
 
 import com.fsmile.core.user.api.ResetPassword;
 import com.fsmile.app.user.persistence.User;
-import com.fsmile.core.user.api.UserApi;
+import com.fsmile.core.user.api.UserService;
 import com.fsmile.core.user.api.UserAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,31 +21,31 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserAdminControllerV1 {
 
-    private final UserApi  userApi;
+    private final UserService userService;
 
     @PostMapping(path = "login")
     public ResponseEntity<?> login(@RequestBody UserAuth user) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(userApi.login(user));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.login(user));
     }
     @PostMapping(path = "signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.OK).body(userApi.createUser(user));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(user));
     }
 
     @PutMapping(path = "editProfile")
     public ResponseEntity<?> editProfile(@RequestBody User user) throws Exception {
-        userApi.updateProfile(user);
+        userService.updateProfile(user);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping(path = "getUserByEmail/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(userApi.getUserByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByEmail(email));
     }
 
     @PutMapping(path = "resetPassword")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPassword password) throws Exception {
-        userApi.resetUserPassword(password);
+        userService.resetUserPassword(password);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

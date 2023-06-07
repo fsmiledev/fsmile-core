@@ -5,15 +5,14 @@ import com.fsmile.app.donation.entities.DonationCategoryEntity;
 import com.fsmile.app.donation.entities.DonationEntity;
 import com.fsmile.app.donation.entities.DonationImgEntity;
 import com.fsmile.app.donation.mapper.DonationMapper;
-import com.fsmile.app.donation.models.AddDonation;
-import com.fsmile.app.donation.models.DonationFull;
+import com.fsmile.app.donation.models.DonationAddModel;
 import com.fsmile.app.donation.repositories.DonationBeneficiaryEntityRepository;
 import com.fsmile.app.donation.repositories.DonationCategoryEntityRepository;
 import com.fsmile.app.donation.repositories.DonationImgEntityRepository;
 import com.fsmile.app.donation.repositories.DonationJpaRepository;
 import com.fsmile.app.user.persistence.UserEntity;
 import com.fsmile.core.donation.api.*;
-import com.fsmile.utils.MapAsyncEntityPageToDtoPage;
+import com.fsmile.core.language.api.LanguageTextService;
 import com.fsmile.utils.MapUtils;
 import com.fsmile.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -44,9 +43,11 @@ public class DonationCoreImpl implements DonationCore {
     private final DonationCategoryEntityRepository donationCategoryRepository;
     private final DonationImgEntityRepository donationImgRepository;
 
+    private final LanguageTextService languageTextService;
+
     @Override
     public void addDonation(DonationModel donation) {
-        AddDonation add = (AddDonation) donation;
+        DonationAddModel add = (DonationAddModel) donation;
         String donationId = StringUtils.uuid();
         DonationEntity s = DonationEntity.builder()
                 .donationId(donationId)
@@ -79,8 +80,8 @@ public class DonationCoreImpl implements DonationCore {
 
     @Override
     public void editDonation(DonationModel donation) {
-        donation = new AddDonation();
-        AddDonation obj = (AddDonation) donation;
+        donation = new DonationAddModel();
+        DonationAddModel obj = (DonationAddModel) donation;
         DonationEntity donationEntity = donationRepository.getReferenceById(obj.donationId());
         if (obj.categoryId() != null){
             donationEntity.setCategory(new DonationCategoryEntity(obj.categoryId()));
@@ -98,27 +99,8 @@ public class DonationCoreImpl implements DonationCore {
 
     @Override
     public DonationModel getDonation(String donationId) {
-        DonationEntity d = donationRepository.getReferenceById(donationId);
-        List<DonationImgEntity> donationImgEntities = d.getDonationImgs().stream().map(img -> DonationImgEntity
-                .builder()
-                .imgId(StringUtils.uuid())
-                .donation(d)
-                .imgUrl(img.getImgUrl())
-                .build()).toList();
-        DonationFull donation = new DonationFull(
-                d.getDonationId(),
-                d.getDonationName(),
-                d.getStatus(),
-                d.isAnonymous(),
-                d.getDonationImgs().stream().map(img -> DonationImg
-                        .builder()
-                        .imgId(StringUtils.uuid())
-                        .imgUrl(img.getImgUrl())
-                        .build()).toList(),
-                d.getCreatedDate(),
-                DonationCategory.builder().categoryId(d.getCategory().getCategoryId()).categoryName(d.getCategory().getCategoryName()).build()
-        );
-        return donation;
+        DonationEntity donation = donationRepository.getReferenceById(donationId);
+        return MapUtils.mapDonationEntityToDonationDto(donation);
     }
 
     @Override

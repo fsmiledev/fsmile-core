@@ -1,6 +1,5 @@
 package com.fsmile.core.user.impl;
 
-import com.fsmile.app.user.persistence.User;
 import com.fsmile.core.user.api.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class UserApiImpl implements UserApi {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 

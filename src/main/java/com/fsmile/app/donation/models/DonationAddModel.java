@@ -15,13 +15,13 @@ import java.util.List;
  */
 
 @Getter
-public class AddDonation extends Donation{
+public class DonationAddModel extends Donation{
     private String donorId;
     private String categoryId;
-    public AddDonation() {
+    public DonationAddModel() {
     }
 
-    public AddDonation(String donationId, String donationName, DonationStatus status, boolean isAnonymous, List<DonationImg> donationImgs, Date dateCreated, String donorId, String categoryId) {
+    public DonationAddModel(String donationId, String donationName, DonationStatus status, boolean isAnonymous, List<DonationImg> donationImgs, Date dateCreated, String donorId, String categoryId) {
         super(donationId, donationName, status, isAnonymous, donationImgs, dateCreated);
         this.donorId = donorId;
         this.categoryId = categoryId;
