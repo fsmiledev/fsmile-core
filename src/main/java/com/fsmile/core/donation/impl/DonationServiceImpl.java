@@ -39,7 +39,7 @@ public class DonationServiceImpl implements DonationService {
                     .textId(StringUtils.uuid())
                     .parentId(donation.donationId())
                     .parentAttribute(ParentAttribute.DONATION_NAME)
-                    .language(language)
+                    .languageId(language.languageId())
                     .wording(language.locale() == Locale.getDefault() ? donation.donationName(): "")
                     .build();
             textService.addText(text);
