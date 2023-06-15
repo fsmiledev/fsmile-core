@@ -15,7 +15,7 @@ public interface LanguageTextService {
     String translateText(String parentId, ParentAttribute parentAttribute, Locale locale);
     List<Text> getTextByParentId(String parentId, ParentAttribute parentAttribute);
     void addLanguage(Language language);
-    void enableOrDisableLanguage();
+    void enableOrDisableLanguage(String languageId);
     Language getLanguage(String languageId);
     List<Language> getEnableLanguage();
     List<Language> getAllLanguage();

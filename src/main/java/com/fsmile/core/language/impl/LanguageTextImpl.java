@@ -1,11 +1,14 @@
 package com.fsmile.core.language.impl;
 
+import com.fsmile.app.language.entities.LanguageEntity;
 import com.fsmile.core.language.api.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Project fsmile-core
@@ -31,7 +34,10 @@ public class LanguageTextImpl implements LanguageTextService {
 
     @Override
     public String translateText(String parentId, ParentAttribute parentAttribute, Locale locale) {
-        return languageCore.findByParentAndLocale(parentId, parentAttribute, locale);
+        List<Language> languages = getEnableLanguage();
+        Optional<Boolean> first = languages.stream().map(l -> l.locale().equals(locale)).findFirst();
+        Locale finalLocale  = first.isPresent() ? locale : Locale.US;
+        return languageCore.findByParentAndLocale(parentId, parentAttribute, finalLocale);
     }
 
     @Override
@@ -45,8 +51,8 @@ public class LanguageTextImpl implements LanguageTextService {
     }
 
     @Override
-    public void enableOrDisableLanguage() {
-        languageCore.enableOrDisableLanguage();
+    public void enableOrDisableLanguage(String languageId) {
+        languageCore.enableOrDisableLanguage(languageId);
     }
 
     @Override

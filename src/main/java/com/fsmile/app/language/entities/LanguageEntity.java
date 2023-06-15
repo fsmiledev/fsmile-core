@@ -32,7 +32,7 @@ public class LanguageEntity {
     private String languageId;
     private Locale locale;
     private String code;
-    private boolean status;
+    private boolean enabled;
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdDate;

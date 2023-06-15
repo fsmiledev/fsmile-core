@@ -2,6 +2,7 @@ package com.fsmile.app.language;
 
 import com.fsmile.app.language.entities.LanguageEntity;
 import com.fsmile.app.language.entities.TextEntity;
+import com.fsmile.app.language.mappers.LanguageMapper;
 import com.fsmile.app.language.repositories.LanguageJpaRepository;
 import com.fsmile.app.language.repositories.TextJpaRepository;
 import com.fsmile.core.language.api.Language;
@@ -11,6 +12,7 @@ import com.fsmile.core.language.api.Text;
 import com.fsmile.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +26,7 @@ import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LanguageCoreImpl implements LanguageCore {
 
     private final TextJpaRepository textRepository;
@@ -37,6 +40,7 @@ public class LanguageCoreImpl implements LanguageCore {
                 .wording(text.wording())
                 .language(new LanguageEntity(text.languageId()))
                 .build();
+        textRepository.save(textEntity);
     }
 
     @Override
@@ -47,31 +51,43 @@ public class LanguageCoreImpl implements LanguageCore {
 
     @Override
     public List<Text> findAllByParentId(String parentId, ParentAttribute parentAttribute) {
-        return null;
+        List<TextEntity> textEntities = textRepository.findByParentIdAndParentAttributeOrderByCreatedDat(parentId, parentAttribute);
+        return LanguageMapper.mapFromTextFromTextEntities(textEntities);
     }
 
     @Override
     public void saveLanguage(Language language) {
-
+        LanguageEntity languageEntity = LanguageEntity.builder()
+                .languageId(language.languageId() == null ? StringUtils.uuid() : language.languageId())
+                .code(language.code())
+                .enabled(false)
+                .locale(language.locale())
+                .build();
+        languageJpaRepository.save(languageEntity);
     }
 
     @Override
-    public void enableOrDisableLanguage() {
-
+    public void enableOrDisableLanguage(String languageId) {
+        LanguageEntity languageEntity = languageJpaRepository.getReferenceById(languageId);
+        languageEntity.setEnabled(!languageEntity.isEnabled());
+        languageJpaRepository.save(languageEntity);
     }
 
     @Override
     public Language findLanguageById(String languageId) {
-        return null;
+        LanguageEntity languageEntity = languageJpaRepository.getReferenceById(languageId);
+        return LanguageMapper.mapFromLanguageEntity(languageEntity);
     }
 
     @Override
     public List<Language> findEnableLanguages() {
-        return null;
+        List<LanguageEntity> languageEntities = languageJpaRepository.findByEnabledOrderByCodeAsc(true);
+        return LanguageMapper.mapFromLanguageEntities(languageEntities);
     }
 
     @Override
     public List<Language> findAllLanguages() {
-        return null;
+        List<LanguageEntity> languageEntities = languageJpaRepository.findAll();
+        return LanguageMapper.mapFromLanguageEntities(languageEntities);
     }
 }

@@ -15,7 +15,7 @@ public interface LanguageCore {
     String findByParentAndLocale(String parentId, ParentAttribute parentAttribute, Locale locale);
     List<Text> findAllByParentId(String parentId, ParentAttribute parentAttribute);
     void saveLanguage(Language language);
-    void enableOrDisableLanguage();
+    void enableOrDisableLanguage(String languageId);
     Language findLanguageById(String languageId);
     List<Language> findEnableLanguages();
     List<Language> findAllLanguages();

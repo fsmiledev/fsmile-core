@@ -3,6 +3,8 @@ package com.fsmile.app.language.repositories;
 import com.fsmile.app.language.entities.LanguageEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Project fsmile-core
  * Package com.fsmile.app.language.repositories
@@ -10,4 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Date 06/06/2023
  */
 public interface LanguageJpaRepository extends JpaRepository<LanguageEntity, String> {
+    List<LanguageEntity> findByEnabledOrderByCodeAsc(boolean enabled);
 }
