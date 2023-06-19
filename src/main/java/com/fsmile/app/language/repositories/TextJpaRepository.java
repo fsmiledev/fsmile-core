@@ -1,6 +1,8 @@
 package com.fsmile.app.language.repositories;
 
+import com.fsmile.app.language.entities.LanguageEntity;
 import com.fsmile.app.language.entities.TextEntity;
+import com.fsmile.core.language.api.Language;
 import com.fsmile.core.language.api.ParentAttribute;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,8 +19,10 @@ import java.util.Locale;
  */
 public interface TextJpaRepository extends JpaRepository<TextEntity, String> {
 
-    @Query("SELECT t.wording FROM TextEntity t WHERE t.parentId =: parentId AND t.parentAttribute =: parentAttribute AND t.language.locale =: locale")
+    @Query("SELECT t.wording FROM TextEntity t WHERE t.parentId = :parentId AND t.parentAttribute = :parentAttribute AND t.language.locale = :locale")
     String findByParentAndLocale(@Param("parentId") String parentId, @Param("parentAttribute") ParentAttribute parentAttribute, @Param("locale") Locale locale);
+
+    TextEntity findTopByParentIdAndParentAttributeAndLanguage(String parentId, ParentAttribute parentAttribute, LanguageEntity language);
 
     List<TextEntity> findByParentIdAndParentAttributeOrderByCreatedDat(String parentId, ParentAttribute parentAttribute);
 }

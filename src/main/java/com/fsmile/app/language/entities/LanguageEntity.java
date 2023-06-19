@@ -33,6 +33,8 @@ public class LanguageEntity {
     private Locale locale;
     private String code;
     private boolean enabled;
+    String logoUrl;
+    String wording;
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdDate;

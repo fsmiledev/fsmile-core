@@ -8,6 +8,6 @@ package com.fsmile.core.language.api;
  */
 public enum ParentAttribute {
     CATEGORY_NAME,
-    CATEGORY_WORDING,
+    CATEGORY_SLOGAN,
     DONATION_NAME
 }

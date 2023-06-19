@@ -54,8 +54,8 @@ public class DonationPrivateControllerV1 {
     }
 
     @PostMapping("add-donation-category")
-    public ResponseEntity<?> addDonationCategory(@RequestBody DonationCategory category) {
-        return ResponseEntity.status(HttpStatus.OK).body(donationService.addDonationCategory(category));
+    public ResponseEntity<?> addDonationCategory() {
+        return ResponseEntity.status(HttpStatus.OK).body(donationService.addDonationCategory());
     }
 
     @PutMapping("edit-donation-category")

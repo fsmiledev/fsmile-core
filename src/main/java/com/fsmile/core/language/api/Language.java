@@ -17,7 +17,9 @@ public record Language(
         String languageId,
         Locale locale,
         String code,
-        boolean status,
+        boolean enabled,
+        String logoUrl,
+        String wording,
         Date createdDate
 ) {
 }

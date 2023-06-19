@@ -27,7 +27,7 @@ public interface DonationCore {
 
     void confirmDonationGive(List<String> donationIds);
 
-    String addDonationCategory(DonationCategory category);
+    String addDonationCategory();
 
     void editDonationCategory(DonationCategory category);
 

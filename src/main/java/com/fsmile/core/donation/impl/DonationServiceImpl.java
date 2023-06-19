@@ -88,8 +88,8 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public String addDonationCategory(DonationCategory category) {
-        return donationCore.addDonationCategory(category);
+    public String addDonationCategory() {
+        return donationCore.addDonationCategory();
     }
 
     @Override

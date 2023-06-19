@@ -23,7 +23,7 @@ public class LanguageTextImpl implements LanguageTextService {
 
     private final LanguageCore languageCore;
     @Override
-    public void addText(Text text) {
+    public void addText(Text text){
         languageCore.saveText(text);
     }
 
@@ -36,7 +36,7 @@ public class LanguageTextImpl implements LanguageTextService {
     public String translateText(String parentId, ParentAttribute parentAttribute, Locale locale) {
         List<Language> languages = getEnableLanguage();
         Optional<Boolean> first = languages.stream().map(l -> l.locale().equals(locale)).findFirst();
-        Locale finalLocale  = first.isPresent() ? locale : Locale.US;
+        Locale finalLocale  = first.isPresent() ? locale : Locale.ENGLISH;
         return languageCore.findByParentAndLocale(parentId, parentAttribute, finalLocale);
     }
 

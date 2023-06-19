@@ -13,6 +13,7 @@ import com.fsmile.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +34,10 @@ public class LanguageCoreImpl implements LanguageCore {
     private final LanguageJpaRepository languageJpaRepository;
     @Override
     public void saveText(Text text) {
+        TextEntity checkedText = textRepository.findTopByParentIdAndParentAttributeAndLanguage(text.parentId(), text.parentAttribute(), new LanguageEntity(text.languageId()));
+        if (checkedText != null) {
+            throw new RuntimeException("Wording for this attribute in this language already exist");
+        }
         TextEntity textEntity = TextEntity.builder()
                 .textId(text.textId() == null ? StringUtils.uuid() : text.textId())
                 .parentId(text.parentId())
@@ -60,8 +65,10 @@ public class LanguageCoreImpl implements LanguageCore {
         LanguageEntity languageEntity = LanguageEntity.builder()
                 .languageId(language.languageId() == null ? StringUtils.uuid() : language.languageId())
                 .code(language.code())
-                .enabled(false)
+                .enabled(language.enabled())
                 .locale(language.locale())
+                .wording(language.wording())
+                .logoUrl(language.logoUrl())
                 .build();
         languageJpaRepository.save(languageEntity);
     }

@@ -28,27 +28,37 @@ public class LanguageTextPrivateController {
     }
 
     @PostMapping("addText")
-    public ResponseEntity<?> addText(Text text) throws Exception {
+    public ResponseEntity<?> addText(@RequestBody Text text) throws Exception {
         languageTextService.addText(text);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("editText")
-    public ResponseEntity<?> editText(Text text) throws Exception {
+    public ResponseEntity<?> editText(@RequestBody Text text) throws Exception {
         languageTextService.editText(text);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("addLanguage")
-    public ResponseEntity<?> addLanguage(Language language) throws Exception {
+    public ResponseEntity<?> addLanguage(@RequestBody Language language) throws Exception {
         languageTextService.addLanguage(language);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping("addLanguage")
+    @PutMapping("enabledOrDisabledLanguage")
     public ResponseEntity<?> enabledOrDisabledLanguage(@RequestBody String languageId) throws Exception {
         languageTextService.enableOrDisableLanguage(languageId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
+
+
+
+
+
+
+
+
+
+

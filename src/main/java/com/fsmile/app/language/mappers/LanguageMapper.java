@@ -19,7 +19,7 @@ public class LanguageMapper {
         return Language.builder()
                 .languageId(languageEntity.getLanguageId())
                 .locale(languageEntity.getLocale())
-                .status(languageEntity.isEnabled())
+                .enabled(languageEntity.isEnabled())
                 .code(languageEntity.getCode())
                 .createdDate(languageEntity.getCreatedDate())
                 .build();

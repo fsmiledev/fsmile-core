@@ -29,13 +29,9 @@ import java.util.Date;
 public class DonationCategoryEntity {
     @Id
     String categoryId;
-    String categoryName;
     @CreationTimestamp
     @Column(updatable = false)
     private Date createdDate;
-    @UpdateTimestamp
-    @Column(updatable = false)
-    private Date updatedDate;
 
     public DonationCategoryEntity(String categoryId) {
         this.categoryId = categoryId;

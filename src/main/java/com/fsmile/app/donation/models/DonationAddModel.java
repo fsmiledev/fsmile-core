@@ -41,7 +41,7 @@ public class DonationAddModel extends Donation{
                 ", categoryId='" + categoryId + '\'' +
                 ", donationId='" + donationId + '\'' +
                 ", donationName='" + donationName + '\'' +
-                ", status=" + status +
+                ", enabled=" + status +
                 ", isAnonymous=" + isAnonymous +
                 ", donationImgs=" + donationImgs +
                 ", dateCreated=" + dateCreated +

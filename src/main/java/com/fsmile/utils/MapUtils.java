@@ -24,25 +24,5 @@ import java.util.concurrent.CompletableFuture;
 
 public class MapUtils {
 
-    private static LanguageTextService languageTextService;
 
-    public MapUtils(LanguageTextService languageTextService) {
-        MapUtils.languageTextService = languageTextService;
-    }
-
-    public static Page<DonationModel> mapDonationPageToDtoPage(CompletableFuture<Page<DonationEntity>> donations) throws Exception {
-        return donations.get().map(MapUtils::mapDonationEntityToDonationDto);
-    }
-
-    public static DonationModel mapDonationEntityToDonationDto(DonationEntity donation) {
-        return  new DonationFull(
-                donation.getDonationId(),
-                languageTextService.translateText(donation.getDonationId(), ParentAttribute.DONATION_NAME, Locale.getDefault()),
-                donation.getStatus(),
-                donation.isAnonymous(),
-                donation.getDonationImgs().stream().map(img -> DonationImg.builder().imgId(img.getImgId()).imgUrl(img.getImgUrl()).build()).toList(),
-                donation.getCreatedDate(),
-                DonationCategory.builder().categoryId(donation.getCategory().getCategoryId()).categoryName(donation.getCategory().getCategoryName()).build(),
-                languageTextService.getTextByParentId(donation.getDonationId(), ParentAttribute.DONATION_NAME));
-    }
 }

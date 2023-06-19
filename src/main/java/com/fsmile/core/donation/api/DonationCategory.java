@@ -1,8 +1,10 @@
 package com.fsmile.core.donation.api;
 
+import com.fsmile.core.language.api.Text;
 import lombok.Builder;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Project trunk
@@ -14,7 +16,9 @@ import java.util.Date;
 public record DonationCategory(
         String categoryId,
         String categoryName,
-        String categoryWording,
+        String slogan,
+        List<Text> categoryNames,
+        List<Text> slogans,
         String categoryImg
 ) {
 }

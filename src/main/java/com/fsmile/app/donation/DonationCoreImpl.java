@@ -100,7 +100,7 @@ public class DonationCoreImpl implements DonationCore {
     @Override
     public DonationModel getDonation(String donationId) {
         DonationEntity donation = donationRepository.getReferenceById(donationId);
-        return MapUtils.mapDonationEntityToDonationDto(donation);
+        return DonationMapper.mapDonationEntityToDonationDto(donation);
     }
 
     @Override
@@ -140,12 +140,9 @@ public class DonationCoreImpl implements DonationCore {
     }
 
     @Override
-    public String addDonationCategory(DonationCategory category) {
+    public String addDonationCategory() {
         String categoryId = StringUtils.uuid();
-        DonationCategoryEntity categoryEntity = DonationCategoryEntity.builder()
-                .categoryId(categoryId)
-                .categoryName(category.categoryName())
-                .build();
+        DonationCategoryEntity categoryEntity = DonationCategoryEntity.builder().categoryId(categoryId).build();
         donationCategoryRepository.save(categoryEntity);
         return categoryId;
     }
@@ -153,30 +150,27 @@ public class DonationCoreImpl implements DonationCore {
     @Override
     public void editDonationCategory(DonationCategory category) {
         DonationCategoryEntity categoryEntity = donationCategoryRepository.getReferenceById(category.categoryId());
-        categoryEntity.setCategoryName(category.categoryName());
+       // categoryEntity.setCategoryName(category.categoryName());
         donationCategoryRepository.save(categoryEntity);
     }
 
     @Override
     public List<DonationCategory> findAllCategories() {
-        return donationCategoryRepository.findAll().stream().map(category -> DonationCategory.builder()
-                .categoryId(category.getCategoryId())
-                .categoryName(category.getCategoryName())
-                .build()).toList();
+        return DonationMapper.donationCategories(donationCategoryRepository.findAll());
     }
 
     @Override
     public Page<DonationModel> findAllDonation(int page, int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findAllBy(pageable);
-        return MapUtils.mapDonationPageToDtoPage(donations);
+        return DonationMapper.mapDonationPageToDtoPage(donations);
     }
 
     @Override
     public Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findDonationEntityByStatus(status, pageable);
-        return MapUtils.mapDonationPageToDtoPage(donations);
+        return DonationMapper.mapDonationPageToDtoPage(donations);
     }
 
     @Override

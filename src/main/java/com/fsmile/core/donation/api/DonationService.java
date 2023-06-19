@@ -24,7 +24,7 @@ public interface DonationService {
     void giveDonation(List<String> donationId, String beneficiaryId);
     void confirmDonationGive(List<String> donationId);
 
-    String addDonationCategory(DonationCategory category);
+    String addDonationCategory();
     void editDonationCategory(DonationCategory category);
 
     List<DonationCategory> findAllCategories();
