@@ -1,8 +1,7 @@
 package com.fsmile;
 
-import com.fsmile.core.language.api.Language;
-import com.fsmile.core.language.api.LanguageTextService;
-import com.fsmile.utils.StringUtils;
+import com.fsmile.core.language.Language;
+import com.fsmile.core.language.LanguageTextService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +24,7 @@ public class FsmileApplication {
 	@Bean
 	@Transactional
 	public void init(){
-		List<Language> allLanguage = languageTextService.getAllLanguage();
+		List<Language> allLanguage = languageTextService.findEnableLanguages();
 		if (allLanguage.isEmpty()) {
 			Language fr = Language.builder()
 					.code("FR")
@@ -41,8 +40,8 @@ public class FsmileApplication {
 					.wording("English")
 					.locale(Locale.ENGLISH)
 					.build();
-			languageTextService.addLanguage(fr);
-			languageTextService.addLanguage(en);
+			languageTextService.saveLanguage(fr);
+			languageTextService.saveLanguage(en);
 		}
 
 	}

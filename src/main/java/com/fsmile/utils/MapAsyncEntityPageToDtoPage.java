@@ -1,10 +1,8 @@
 package com.fsmile.utils;
 
-import com.fsmile.app.donation.entities.DonationEntity;
 import org.springframework.data.domain.Page;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author raphael
