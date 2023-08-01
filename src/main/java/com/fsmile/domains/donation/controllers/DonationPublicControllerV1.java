@@ -44,6 +44,7 @@ public class DonationPublicControllerV1 {
 
     @PostMapping("make-donation")
     public ResponseEntity<?> makeDonation(@RequestBody DonationAddModel donation) {
+        System.out.println(donation);
         return ResponseEntity.status(HttpStatus.CREATED).body(donationService.addDonation(donation));
     }
 

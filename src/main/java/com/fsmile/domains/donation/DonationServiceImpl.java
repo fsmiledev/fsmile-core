@@ -15,7 +15,7 @@ import com.fsmile.domains.donation.repositories.DonationCategoryEntityRepository
 import com.fsmile.domains.donation.repositories.DonationImgEntityRepository;
 import com.fsmile.domains.donation.repositories.DonationJpaRepository;
 import com.fsmile.domains.user.entities.UserEntity;
-import com.fsmile.utils.StringUtils;
+import com.fsmile.shared.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +44,7 @@ public class DonationServiceImpl implements DonationService {
     private final DonationBeneficiaryEntityRepository donationBeneficiaryRepository;
     private final DonationCategoryEntityRepository donationCategoryRepository;
     private final DonationImgEntityRepository donationImgRepository;
+    private final DonationMapper donationMapper;
 
     private final LanguageTextService languageTextService;
 
@@ -51,6 +52,7 @@ public class DonationServiceImpl implements DonationService {
     public String addDonation(DonationModel donation) {
         DonationAddModel add = (DonationAddModel) donation;
         String donationId = StringUtils.uuid();
+        //System.out.println(add);
         DonationEntity s = DonationEntity.builder()
                 .donationId(donationId)
                 .donationName(add.donationName())
@@ -73,7 +75,7 @@ public class DonationServiceImpl implements DonationService {
                     .parentId(donationId)
                     .parentAttribute(ParentAttribute.DONATION_NAME)
                     .languageId(language.languageId())
-                    .wording(language.locale() == Locale.getDefault() ? donation.donationName(): "")
+                    .wording(language.locale().equals(Locale.getDefault()) ? donation.donationName(): "")
                     .build();
             languageTextService.saveText(text);
         });
@@ -112,20 +114,20 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationModel getDonation(String donationId) {
-        DonationEntity donation = donationRepository.getReferenceById(donationId);
-        return DonationMapper.mapDonationEntityToDonationDto(donation);
+        DonationEntity donation = donationRepository.findById(donationId).orElse(new DonationEntity());
+        return donationMapper.donation(donation);
     }
 
     @Override
     public void validateDonation(String donationId) {
-        DonationEntity donationEntity = donationRepository.getReferenceById(donationId);
+        DonationEntity donationEntity = donationRepository.findById(donationId).orElseThrow(() -> new RuntimeException("This donation don't exist"));
         donationEntity.setStatus(DonationStatus.VALIDATE);
         donationRepository.save(donationEntity);
     }
 
     @Override
     public void rejectDonation(String donationId) {
-        DonationEntity donationEntity = donationRepository.getReferenceById(donationId);
+        DonationEntity donationEntity = donationRepository.findById(donationId).orElseThrow(() -> new RuntimeException("This donation don't exist"));
         donationEntity.setStatus(DonationStatus.REJECT);
         donationRepository.save(donationEntity);
     }
@@ -134,7 +136,7 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public void giveDonations(List<String> donationIds, String beneficiaryId) {
         List<DonationEntity> donationEntities = donationIds.stream().map(donationId -> {
-            DonationEntity donationEntity =  donationRepository.getReferenceById(donationId);
+            DonationEntity donationEntity = donationRepository.findById(donationId).orElseThrow(() -> new RuntimeException("This donation don't exist"));;
             donationEntity.setStatus(DonationStatus.GIVE);
             donationEntity.setBeneficiary(new DonationBeneficiaryEntity(beneficiaryId));
             return donationEntity;
@@ -145,7 +147,7 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public void confirmDonationGive(List<String> donationIds) {
         List<DonationEntity> donationEntities = donationIds.stream().map(donationId -> {
-            DonationEntity donationEntity =  donationRepository.getReferenceById(donationId);
+            DonationEntity donationEntity =  donationRepository.findById(donationId).orElseThrow(() -> new RuntimeException("This donation don't exist"));
             donationEntity.setStatus(DonationStatus.RECEIVED);
             return donationEntity;
         }).toList();
@@ -169,21 +171,21 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public List<DonationCategory> findAllCategories() {
-        return DonationMapper.donationCategories(donationCategoryRepository.findAll());
+        return donationCategoryRepository.findAll().stream().map(donationMapper::category).toList();
     }
 
     @Override
     public Page<DonationModel> findAllDonation(int page, int size) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findAllBy(pageable);
-        return DonationMapper.mapDonationPageToDtoPage(donations);
+        return donations.get().map(donationMapper::donation);
     }
 
     @Override
     public Page<DonationModel> findDonationsByStatus(int page, int size, DonationStatus status) throws Exception {
         Pageable pageable = PageRequest.of(page, size);
         CompletableFuture<Page<DonationEntity>> donations = donationRepository.findDonationEntityByStatus(status, pageable);
-        return DonationMapper.mapDonationPageToDtoPage(donations);
+        return  donations.get().map(donationMapper::donation);
     }
 
     @Override
@@ -211,15 +213,15 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationBeneficiary getDonationBeneficiary(String beneficiaryId) {
-        DonationBeneficiaryEntity entity = donationBeneficiaryRepository.getReferenceById(beneficiaryId);
-        return DonationMapper.beneficiary(entity);
+        DonationBeneficiaryEntity entity = donationBeneficiaryRepository.findById(beneficiaryId).orElse(new DonationBeneficiaryEntity());
+        return donationMapper.beneficiary(entity);
     }
 
 
     @Override
     public Page<DonationBeneficiary> getAllDonationBeneficiaries(int page, int size) throws Exception{
         CompletableFuture<Page<DonationBeneficiaryEntity>> beneficiaryPage = donationBeneficiaryRepository.findAllByOrderByNameAsc(PageRequest.of(page, size));
-        return DonationMapper.beneficiaries().map(beneficiaryPage);
+        return beneficiaryPage.get().map(donationMapper::beneficiary);
     }
 
     @Override

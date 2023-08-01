@@ -26,7 +26,7 @@ public class Donation implements DonationModel {
     protected String donationId;
     protected String donationName;
     protected DonationStatus status;
-    protected boolean isAnonymous;
+    protected Boolean isAnonymous;
     protected List<DonationImg> donationImgs;
     protected Date dateCreated;
 
@@ -46,7 +46,7 @@ public class Donation implements DonationModel {
     }
 
     @Override
-    public boolean isAnonymous() {
+    public Boolean isAnonymous() {
         return isAnonymous;
     }
 

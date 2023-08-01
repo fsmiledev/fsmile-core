@@ -21,7 +21,7 @@ public class DonationAddModel extends Donation{
     public DonationAddModel() {
     }
 
-    public DonationAddModel(String donationId, String donationName, DonationStatus status, boolean isAnonymous, List<DonationImg> donationImgs, Date dateCreated, String donorId, String categoryId) {
+    public DonationAddModel(String donationId, String donationName, DonationStatus status, Boolean isAnonymous, List<DonationImg> donationImgs, Date dateCreated, String donorId, String categoryId) {
         super(donationId, donationName, status, isAnonymous, donationImgs, dateCreated);
         this.donorId = donorId;
         this.categoryId = categoryId;

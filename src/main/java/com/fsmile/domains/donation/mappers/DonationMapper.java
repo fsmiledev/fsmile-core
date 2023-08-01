@@ -1,21 +1,19 @@
 package com.fsmile.domains.donation.mappers;
 
-import com.fsmile.core.language.LanguageTextService;
-import com.fsmile.domains.donation.entities.DonationBeneficiaryEntity;
-import com.fsmile.domains.donation.entities.DonationCategoryEntity;
-import com.fsmile.domains.donation.entities.DonationEntity;
-import com.fsmile.domains.donation.models.DonationFull;
 import com.fsmile.core.donation.DonationBeneficiary;
 import com.fsmile.core.donation.DonationCategory;
 import com.fsmile.core.donation.DonationImg;
 import com.fsmile.core.donation.DonationModel;
+import com.fsmile.core.language.LanguageTextService;
 import com.fsmile.core.language.ParentAttribute;
-import com.fsmile.utils.MapAsyncEntityPageToDtoPage;
-import org.springframework.data.domain.Page;
+import com.fsmile.domains.donation.entities.DonationBeneficiaryEntity;
+import com.fsmile.domains.donation.entities.DonationCategoryEntity;
+import com.fsmile.domains.donation.entities.DonationEntity;
+import com.fsmile.domains.donation.models.DonationFull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author raphael
@@ -23,19 +21,16 @@ import java.util.concurrent.CompletableFuture;
  * @package com.fsmile.app.donation.mapper
  * @date 5/18/23 : 2:14 PM
  */
+
+@Component
+@RequiredArgsConstructor
 public class DonationMapper {
 
-    private static LanguageTextService languageTextService;
+    private final LanguageTextService languageTextService;
 
-    public DonationMapper(LanguageTextService languageTextService) {
-        DonationMapper.languageTextService = languageTextService;
-    }
-
-    public static Page<DonationModel> mapDonationPageToDtoPage(CompletableFuture<Page<DonationEntity>> donations) throws Exception {
-        return donations.get().map(DonationMapper::mapDonationEntityToDonationDto);
-    }
-
-    public static DonationModel mapDonationEntityToDonationDto(DonationEntity donation) {
+    public DonationModel donation(DonationEntity donation) {
+        System.out.println("je suis ici");
+        System.out.println(" ==> " + languageTextService.toString());
         return new DonationFull(
                 donation.getDonationId(),
                 languageTextService.translateText(donation.getDonationId(), ParentAttribute.DONATION_NAME, Locale.getDefault()),
@@ -48,12 +43,8 @@ public class DonationMapper {
                 languageTextService.findAllByParentId(donation.getDonationId(), ParentAttribute.DONATION_NAME));
     }
 
-    public static MapAsyncEntityPageToDtoPage<DonationBeneficiary, DonationBeneficiaryEntity> beneficiaries() {
-        return (b) -> b.get().map(DonationMapper::beneficiary);
 
-    }
-
-    public static DonationBeneficiary beneficiary(DonationBeneficiaryEntity entity) {
+    public DonationBeneficiary beneficiary(DonationBeneficiaryEntity entity) {
         return DonationBeneficiary.builder()
                 .beneficiaryId(entity.getBeneficiaryId())
                 .name(entity.getName())
@@ -70,11 +61,8 @@ public class DonationMapper {
                 .build();
     }
 
-    public static List<DonationCategory> donationCategories(List<DonationCategoryEntity> entities) {
-        return entities.stream().map(DonationMapper::category).toList();
-    }
 
-    public static DonationCategory category(DonationCategoryEntity entity) {
+    public DonationCategory category(DonationCategoryEntity entity) {
         return DonationCategory.builder()
                 .categoryId(entity.getCategoryId())
                 .categoryName(languageTextService.translateText(entity.getCategoryId(), ParentAttribute.CATEGORY_NAME, Locale.getDefault()))

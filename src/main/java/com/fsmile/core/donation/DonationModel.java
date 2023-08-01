@@ -16,7 +16,7 @@ public interface DonationModel {
     //User donor,
     //DonationBeneficiary beneficiary,
     DonationStatus status();
-    boolean isAnonymous();
+    Boolean isAnonymous();
     List<DonationImg> donationImgs();
     Date dateCreated();
 }

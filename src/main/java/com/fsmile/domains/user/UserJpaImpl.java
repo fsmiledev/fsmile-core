@@ -6,7 +6,7 @@ import com.fsmile.domains.user.entities.UserEntity;
 import com.fsmile.domains.user.models.User;
 import com.fsmile.domains.user.models.UserRole;
 import com.fsmile.domains.user.repositories.UserJpaRepository;
-import com.fsmile.utils.BundleUtils;
+import com.fsmile.shared.BundleUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

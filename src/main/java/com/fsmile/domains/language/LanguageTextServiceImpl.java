@@ -9,7 +9,7 @@ import com.fsmile.core.language.Language;
 import com.fsmile.core.language.LanguageTextService;
 import com.fsmile.core.language.ParentAttribute;
 import com.fsmile.core.language.Text;
-import com.fsmile.utils.StringUtils;
+import com.fsmile.shared.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

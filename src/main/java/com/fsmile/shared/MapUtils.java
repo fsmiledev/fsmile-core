@@ -1,4 +1,4 @@
-package com.fsmile.utils;
+package com.fsmile.shared;
 
 /**
  * @author raphael

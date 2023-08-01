@@ -1,13 +1,10 @@
-package com.fsmile.utils;
+package com.fsmile.shared;
 
-import com.sun.java.accessibility.util.Translator;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Project fsmile-core
