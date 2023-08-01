@@ -29,8 +29,6 @@ public class DonationMapper {
     private final LanguageTextService languageTextService;
 
     public DonationModel donation(DonationEntity donation) {
-        System.out.println("je suis ici");
-        System.out.println(" ==> " + languageTextService.toString());
         return new DonationFull(
                 donation.getDonationId(),
                 languageTextService.translateText(donation.getDonationId(), ParentAttribute.DONATION_NAME, Locale.getDefault()),
