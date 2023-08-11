@@ -4,6 +4,7 @@ import com.fsmile.core.user.ResetPassword;
 import com.fsmile.core.user.UserService;
 import com.fsmile.domains.user.models.User;
 import com.fsmile.core.user.UserAuth;
+import com.fsmile.domains.user.models.UserPassword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("api/v0/user")
+@RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class UserAdminControllerV1 {
 
@@ -28,7 +29,7 @@ public class UserAdminControllerV1 {
         return ResponseEntity.status(HttpStatus.OK).body(userService.login(user));
     }
     @PostMapping(path = "signup")
-    public ResponseEntity<?> signup(@RequestBody User user) {
+    public ResponseEntity<?> signup(@RequestBody UserPassword user) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(user));
     }
 
@@ -40,7 +41,7 @@ public class UserAdminControllerV1 {
 
     @GetMapping(path = "getUserByEmail/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(email));
     }
 
     @PutMapping(path = "resetPassword")

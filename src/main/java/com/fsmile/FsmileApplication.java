@@ -1,11 +1,15 @@
 package com.fsmile;
 
+import com.fsmile.config.Security.PasswordEncoderImpl;
+import com.fsmile.config.Security.RsaKeyConfig;
 import com.fsmile.core.language.Language;
 import com.fsmile.core.language.LanguageTextService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,6 +17,7 @@ import java.util.Locale;
 
 @AllArgsConstructor
 @SpringBootApplication
+@EnableConfigurationProperties(RsaKeyConfig.class)
 public class FsmileApplication {
 
 	private final LanguageTextService languageTextService;
@@ -22,7 +27,6 @@ public class FsmileApplication {
 	}
 
 	@Bean
-	@Transactional
 	public void init(){
 		List<Language> allLanguage = languageTextService.findEnableLanguages();
 		if (allLanguage.isEmpty()) {

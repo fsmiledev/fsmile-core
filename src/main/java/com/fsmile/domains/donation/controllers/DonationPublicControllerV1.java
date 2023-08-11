@@ -27,7 +27,7 @@ public class DonationPublicControllerV1 {
         return ResponseEntity.ok(donationService.getDonation(donationId));
     }
 
-    @GetMapping("validate-donations/{page}/{size}")
+    @GetMapping("valid-donations/{page}/{size}")
     public ResponseEntity<?> getValidateDonation(@PathVariable int page, @PathVariable int size) throws Exception {
         return ResponseEntity.ok(donationService.findDonationsByStatus(page, size, DonationStatus.VALIDATE));
     }
@@ -37,7 +37,7 @@ public class DonationPublicControllerV1 {
         return ResponseEntity.ok(donationService.findDonationsByStatus(page, size, DonationStatus.RECEIVED));
     }
 
-    @GetMapping("donations-category")
+    @GetMapping("donations-categories")
     public ResponseEntity<?> getDonationCategories() {
         return ResponseEntity.ok(donationService.findAllCategories());
     }

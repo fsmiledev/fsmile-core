@@ -1,6 +1,5 @@
 package com.fsmile.domains.user.entities;
 
-import com.fsmile.domains.user.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

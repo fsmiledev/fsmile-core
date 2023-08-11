@@ -10,6 +10,7 @@ public record UserAuth(
         String username,
         String password,
         String grandType, //password Or refresh_token
-        String refreshToken
+        String refreshToken,
+        String clientId
 ) {
 }

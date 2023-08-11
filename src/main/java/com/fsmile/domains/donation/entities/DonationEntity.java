@@ -1,7 +1,7 @@
 package com.fsmile.domains.donation.entities;
 
-import com.fsmile.domains.user.entities.UserEntity;
 import com.fsmile.core.donation.DonationStatus;
+import com.fsmile.domains.user.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -3,7 +3,6 @@ package com.fsmile.domains.user.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,20 +13,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
 /**
- * @author raphael
- * @project fsmile
- * @package com.fsmile.core.domain.user.api
- * @date 2/18/23 : 6:45 PM
+ * Project fsmile
+ * Package com.fsmile.domains.user.entities;
+ * Author revouna
+ * Date 29/06/2023
  */
-
 @Entity
-@Table(name = "APP_USER")
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Builder
 public class UserEntity {
-
     @Id @Column(name = "USER_ID")
     String userId;
     @Column(unique = true, name = "USERNAME")
@@ -40,6 +36,8 @@ public class UserEntity {
     String email;
     @Column(name = "PASSWORD")
     String password;
+    @Column(name = "ENABLED")
+    private boolean enabled;
     @CreationTimestamp
     @Column(name = "CREATED_DATE")
     private Date createdDate;
@@ -49,6 +47,4 @@ public class UserEntity {
     public UserEntity(String userId) {
         this.userId = userId;
     }
-
 }
-

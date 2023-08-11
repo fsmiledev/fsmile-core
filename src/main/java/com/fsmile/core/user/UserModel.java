@@ -1,5 +1,6 @@
 package com.fsmile.core.user;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,5 @@ public interface UserModel {
     String firstName();
     String lastName();
     String email();
-    String password();
-    String dateCreated();
+    Date dateCreated();
 }

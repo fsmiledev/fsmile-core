@@ -3,6 +3,8 @@ package com.fsmile.domains.user.models;
 import com.fsmile.core.user.UserModel;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * @author raphael
  * @project fsmile
@@ -10,10 +12,10 @@ import lombok.*;
  * @date 2/18/23 : 6:45 PM
  */
 
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class User implements UserModel {
 
     protected String userId;
@@ -21,15 +23,7 @@ public class User implements UserModel {
     protected String firstName;
     protected String lastName;
     protected String email;
-    protected String password;
-    protected String dateCreated;
-
-    public User(String userId, String username, String lastName, String email) {
-        this.userId = userId;
-        this.username = username;
-        this.lastName = lastName;
-        this.email = email;
-    }
+    protected Date dateCreated;
 
 
     @Override
@@ -58,12 +52,7 @@ public class User implements UserModel {
     }
 
     @Override
-    public String password() {
-        return password;
-    }
-
-    @Override
-    public String dateCreated() {
+    public Date dateCreated() {
         return dateCreated;
     }
 

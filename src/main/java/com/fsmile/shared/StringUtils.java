@@ -1,5 +1,7 @@
 package com.fsmile.shared;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.UUID;
 
 /**
@@ -15,5 +17,8 @@ public class StringUtils {
     }
     public static String uuid(String key){
         return UUID.fromString(key).toString();
+    }
+    public static String bcryptPasswordEncoder(String rawPassword) {
+        return new BCryptPasswordEncoder().encode(rawPassword);
     }
 }

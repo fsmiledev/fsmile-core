@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -17,14 +19,17 @@ import java.util.concurrent.CompletableFuture;
  * @package com.fsmile.admin.domain.user.persistence
  * @date 2/19/23 : 6:58 PM
  */
-public interface UserJpaRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<UserEntity, String> {
     @Async
     CompletableFuture<Page<UserEntity>> findAllBy(Pageable pageable);
     
     @Query("SELECT u.donor FROM DonationEntity u WHERE u.donationId =: donationId")
     User findByDonation(@Param("donationId") String donationId);
 
-    UserEntity findByEmail(String email);
+    Optional<UserEntity> findByUsernameOrEmail(String username, String email);
+
+    @Query("SELECT u FROM UserEntity u JOIN UserGroupMapping ugm ON ugm.groupEntity.groupId = :groupId")
+    List<UserEntity> findByGroupId(@Param("groupId") String groupId);
 
 
 }

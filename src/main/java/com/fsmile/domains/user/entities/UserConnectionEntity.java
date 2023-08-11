@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * @author raphael
  * @project fsmile
- * @package com.fsmile.admin.domain.user.persistence
+ * @package com.fsmile.domains.user.entities
  * @date 3/23/23 : 3:53 AM
  */
 
